@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+      
+    <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -9,16 +10,23 @@
       --primary-color: #0f172a;
       --secondary-color: #0284c7;
       --accent-color: #0ea5e9;
-      --bg-color: #f8fafc;
       --card-bg: #ffffff;
       --text-color: #334155;
       --heading-color: #0f172a;
       --border-color: #e2e8f0;
     } 
 
+    @keyframes bgShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    } 
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--bg-color);
+      background: linear-gradient(120deg, #6366f1, #0ea5e9, #14b8a6, #a855f7, #f472b6, #6366f1);
+      background-size: 400% 400%;
+      animation: bgShift 18s ease infinite;
       color: var(--text-color);
       margin: 0;
       padding: 0;
@@ -38,7 +46,7 @@
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 16px;
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -4px rgba(0,0,0,0.05);
+      box-shadow: 0 10px 25px -3px rgba(0,0,0,0.25), 0 4px 6px -4px rgba(0,0,0,0.1);
       padding: 40px;
       margin-top: 20px;
       box-sizing: border-box;
@@ -46,7 +54,10 @@
     .title {
       font-size: 26px;
       font-weight: 800;
-      color: var(--primary-color);
+      background: linear-gradient(90deg, #4f46e5, #0ea5e9, #14b8a6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       text-align: center;
       margin-bottom: 8px;
       text-transform: uppercase;
@@ -94,16 +105,16 @@
       padding: 14px 28px;
       font-size: 15px;
       font-weight: 600;
-      background-color: var(--secondary-color);
+      background: linear-gradient(90deg, #0284c7, #14b8a6);
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s ease;
     }
-    button:hover { background-color: #0369a1; transform: translateY(-1px); }
-    button.secondary { background-color: #64748b; }
-    button.secondary:hover { background-color: #475569; }
+    button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    button.secondary { background: linear-gradient(90deg, #64748b, #94a3b8); }
+    button.secondary:hover { filter: brightness(1.1); }
     .or-divider {
       text-align: center;
       font-weight: bold;
@@ -208,7 +219,6 @@
   const actData = {
     "act_title": "The Companies Act, 2013",
     "total_sections": 470,
-    
   "sections": [
     {
       "section_number": "1",
@@ -2957,7 +2967,8 @@
   */
 
         // UI Navigation Logic
-   function resetSearch() {
+   
+function resetSearch() {
     document.getElementById("sectionInput").value = "";
     document.getElementById("keywordInput").value = "";
     document.getElementById("searchResultBox").innerHTML =
@@ -3045,3 +3056,4 @@
 
 </body>
 </html>
+
