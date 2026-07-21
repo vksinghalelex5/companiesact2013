@@ -1,0 +1,3086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semiconductor Integrated Circuits Layout-Design Act, 2000</title>
+  <style>
+    :root {
+      --primary-color: #0f172a;
+      --secondary-color: #0284c7;
+      --accent-color: #0ea5e9;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #334155;
+      --heading-color: #0f172a;
+      --border-color: #e2e8f0;
+      --highlight-color: #fef08a;
+    }
+
+    /* Flashing background animation cycling through colors */
+    @keyframes flashingBackground {
+      0%   { background-color: #f8fafc; }
+      15%  { background-color: #dbeafe; }
+      30%  { background-color: #fce7f3; }
+      45%  { background-color: #fef9c3; }
+      60%  { background-color: #dcfce7; }
+      75%  { background-color: #ede9fe; }
+      90%  { background-color: #ffe4e6; }
+      100% { background-color: #f8fafc; }
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      animation: flashingBackground 8s ease-in-out infinite;
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .hidden {
+      display: none !important;
+    }
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+      padding: 40px;
+      margin-top: 20px;
+      box-sizing: border-box;
+    }
+    .title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #64748b;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 35px;
+    }
+    .form-group {
+      margin-bottom: 24px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--heading-color);
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-size: 16px;
+      transition: all 0.2s ease-in-out;
+      box-sizing: border-box;
+      background-color: #f8fafc;
+    }
+    input[type="text"]:focus, input[type="password"]:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
+      background-color: #ffffff;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    button:hover {
+      background-color: #0369a1;
+      transform: translateY(-1px);
+    }
+    button.secondary {
+      background-color: #64748b;
+    }
+    button.secondary:hover {
+      background-color: #475569;
+    }
+    .or-divider {
+      text-align: center;
+      font-weight: bold;
+      margin: 30px 0;
+      color: #94a3b8;
+      position: relative;
+    }
+    .or-divider::before, .or-divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 42%;
+      height: 1px;
+      background: var(--border-color);
+    }
+    .or-divider::before { left: 0; }
+    .or-divider::after { right: 0; }
+    
+    .result-box {
+      margin-top: 30px;
+      background: #fafafa;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+    .legal-item {
+      margin-bottom: 35px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .legal-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--secondary-color);
+      margin-top: 0;
+      margin-bottom: 6px;
+    }
+    .section-text {
+      font-size: 14.5px;
+      line-height: 1.65;
+      text-align: justify;
+      color: #334155;
+      margin-bottom: 12px;
+    }
+    .example-box {
+      background-color: #f0f9ff;
+      border-left: 4px solid var(--accent-color);
+      padding: 16px;
+      margin-top: 10px;
+      border-radius: 0 8px 8px 0;
+      font-size: 14.5px;
+    }
+    .example-title {
+      font-weight: bold;
+      color: #0369a1;
+      margin-bottom: 4px;
+    }
+    .badge {
+      display: inline-block;
+      background-color: #f1f5f9;
+      color: #475569;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      border: 1px solid #cbd5e1;
+    }
+    #loginError {
+      color: #ef4444;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 15px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- LOGIN VIEW -->
+  <div id="loginPage" class="card">
+    <div class="title">Hardware IP Portal</div>
+    <div class="subtitle">Semiconductor Integrated Circuits Layout-Design Act, 2000</div>
+    
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Enter microelectronics portal ID">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter secure gateway key">
+    </div>
+    
+    <div style="text-align: center;">
+      <button onclick="handleLogin()">Unlock Registry Database</button>
+    </div>
+    <div id="loginError"></div>
+  </div>
+
+  <!-- MAIN DATABASE SEARCH VIEW -->
+  <div id="searchPage" class="card hidden">
+    <div class="title">SICLD Statutory Registry</div>
+    <div class="subtitle">Search all 96 Sections under Act No. 37 of 2000 with Real-world Hardware Examples</div>
+    
+    <div class="form-group">
+      <label for="sectionInput">Search by Section Number</label>
+      <input type="text" id="sectionInput" placeholder="Enter specific section number (e.g., 2, 7, 15, 18, 56)">
+    </div>
+    
+    <div class="or-divider">OR</div>
+    
+    <div class="form-group">
+      <label for="keywordInput">Search by Silicon / Legal Concept</label>
+      <input type="text" id="keywordInput" placeholder="Enter keyword (e.g., original, infringement, royalty, penalty, appellate)">
+    </div>
+    
+    <div class="btn-group">
+      <button class="secondary" onclick="goToLogin()">Lock Database</button>
+      <button onclick="showSearchResult()">Execute Statutory Query</button>
+      <button class="secondary" onclick="resetSearch()">Clear Inputs</button>
+    </div>
+    
+    <div id="searchResultBox" class="result-box">
+      <span style="color: #64748b;">Awaiting hardware IP registry query. Enter a specific legal section or layout concept above to execute.</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Complete 96-Section Database containing Plain English Meanings and Silicon Engineering Examples
+  const layoutDesignActData = {
+    
+       {
+  "act_title": "The Companies Act, 2013",
+  "total_sections": 470,
+  "sections": [
+    {
+      "section_number": "1",
+      "title": "Short title, extent, commencement and application",
+      "example": "The Companies Act, 2013 applies to the whole of India, governing all companies incorporated under this Act or previous company laws, as well as banking, insurance, and electricity companies (unless inconsistent with their specific acts)."
+    },
+    {
+      "section_number": "2",
+      "title": "Definitions",
+      "sub_sections": [
+        {"sub_section": "2(1)", "title": "Abridged prospectus", "example": "A summary prospectus containing salient features specified by SEBI."},
+        {"sub_section": "2(2)", "title": "Accounting standards", "example": "Standards of accounting referred to in section 133."},
+        {"sub_section": "2(3)", "title": "Alter or alteration", "example": "Making additions, omissions, and substitutions in documents."},
+        {"sub_section": "2(4)", "title": "Appellate Tribunal", "example": "National Company Law Appellate Tribunal (NCLAT)."},
+        {"sub_section": "2(5)", "title": "Articles", "example": "Articles of association of a company detailing internal management regulations."},
+        {"sub_section": "2(6)", "title": "Associate company", "example": "Company A holds 25% voting power in Company B; Company B is an associate of Company A."},
+        {"sub_section": "2(7)", "title": "Auditing standards", "example": "Standards of auditing referred to in section 143(10)."},
+        {"sub_section": "2(8)", "title": "Authorised capital or nominal capital", "example": "Maximum share capital of Rs. 10,005 authorised by a company's memorandum."},
+        {"sub_section": "2(9)", "title": "Banking company", "example": "A company transacting banking business as defined under the Banking Regulation Act, 1949."},
+        {"sub_section": "2(10)", "title": "Board of Directors or Board", "example": "The collective body of directors managing ABC Private Limited."},
+        {"sub_section": "2(11)", "title": "Body corporate or corporation", "example": "Includes foreign companies incorporated outside India, but excludes cooperative societies."},
+        {"sub_section": "2(12)", "title": "Book and paper / book or paper", "example": "Includes books of accounts, deeds, vouchers, and electronic registers."},
+        {"sub_section": "2(13)", "title": "Books of account", "example": "Records of all sums of money received/expended, sales/purchases, and assets/liabilities."},
+        {"sub_section": "2(14)", "title": "Branch office", "example": "Any establishment designated as a branch office by the company outside its head office location."},
+        {"sub_section": "2(15)", "title": "Called-up capital", "example": "The portion of capital (e.g., Rs. 5 per share out of Rs. 10) called by the company for payment."},
+        {"sub_section": "2(16)", "title": "Charge", "example": "A mortgage or lien created on company assets as security for a bank loan."},
+        {"sub_section": "2(17)", "title": "Chartered accountant", "example": "An accountant holding a valid certificate of practice under the Chartered Accountants Act, 1949."},
+        {"sub_section": "2(18)", "title": "Chief Executive Officer", "example": "An officer designated as CEO by the company board."},
+        {"sub_section": "2(19)", "title": "Chief Financial Officer", "example": "A person appointed as the CFO handling financial management."},
+        {"sub_section": "2(20)", "title": "Company", "example": "A corporate entity incorporated under the Companies Act, 2013 or any previous law."},
+        {"sub_section": "2(21)", "title": "Company limited by guarantee", "example": "Members liability is limited by memorandum to a specific amount undertaken to contribute upon winding up."},
+        {"sub_section": "2(22)", "title": "Company limited by shares", "example": "Members liability is limited to the unpaid amount on shares held by them."},
+        {"sub_section": "2(23)", "title": "Company Liquidator", "example": "A person appointed by the Tribunal under section 275 for winding up."},
+        {"sub_section": "2(24)", "title": "Company secretary or secretary", "example": "A qualified CS appointed to perform secretary functions under the Act."},
+        {"sub_section": "2(25)", "title": "Company secretary in practice", "example": "A CS deemed to be in practice under the Company Secretaries Act, 1980."},
+        {"sub_section": "2(26)", "title": "Contributory", "example": "A person liable to contribute to company assets during winding up (fully paid shareholders are included with no liabilities)."},
+        {"sub_section": "2(27)", "title": "Control", "example": "Right to appoint a majority of directors or control management/policy decisions."},
+        {"sub_section": "2(28)", "title": "Cost Accountant", "example": "A cost accountant holding a valid certificate of practice under the Cost and Works Accountants Act, 1959."},
+        {"sub_section": "2(29)", "title": "Court", "example": "High Court, District Court, Sessions Court, Special Court, or Magistrate depending on jurisdiction."},
+        {"sub_section": "2(30)", "title": "Debenture", "example": "Includes debenture stock, bonds, or other instruments evidencing debt, whether creating a charge or not."},
+        {"sub_section": "2(31)", "title": "Deposit", "example": "Any receipt of money by way of deposit or loan, excluding prescribed categories."},
+        {"sub_section": "2(32)", "title": "Depository", "example": "A depository defined under section 2(1)(e) of the Depositories Act, 1996."},
+        {"sub_section": "2(33)", "title": "Derivative", "example": "A financial derivative defined under section 2(ac) of the Securities Contracts (Regulation) Act, 1956."},
+        {"sub_section": "2(34)", "title": "Director", "example": "An individual appointed to the Board of a company."},
+        {"sub_section": "2(35)", "title": "Dividend", "example": "Includes interim dividend distributed to shareholders from profits."},
+        {"sub_section": "2(36)", "title": "Document", "example": "Summons, notice, requisition, order, form, or register kept on paper or in electronic form."},
+        {"sub_section": "2(37)", "title": "Employees' stock option", "example": "Right given to employees to purchase company shares at a future date at a predetermined price."},
+        {"sub_section": "2(38)", "title": "Expert", "example": "An engineer, valuer, chartered accountant, CS, cost accountant, or authorized certificate issuer."},
+        {"sub_section": "2(39)", "title": "Financial institution", "example": "Includes a scheduled bank and other institutions notified under the RBI Act, 1934."},
+        {"sub_section": "2(40)", "title": "Financial statement", "example": "Includes balance sheet, profit and loss account, cash flow statement, statement of changes in equity, and explanatory notes."},
+        {"sub_section": "2(41)", "title": "Financial year", "example": "Period ending on the 31st day of March every year."},
+        {"sub_section": "2(42)", "title": "Foreign company", "example": "A company incorporated outside India having a place of business in India physically or electronically."},
+        {"sub_section": "2(43)", "title": "Free reserves", "example": "Reserves available for distribution as dividend, excluding unrealized or notional gains."},
+        {"sub_section": "2(44)", "title": "Global Depository Receipt", "example": "Depository receipt created by a foreign depository outside India against company shares."},
+        {"sub_section": "2(45)", "title": "Government company", "example": "Company in which not less than 51% paid-up share capital is held by Central/State Government(s)."},
+        {"sub_section": "2(46)", "title": "Holding company", "example": "A company of which one or more other companies are subsidiary companies."},
+        {"sub_section": "2(47)", "title": "Independent director", "example": "An independent director referred to in section 149(6)."},
+        {"sub_section": "2(48)", "title": "Indian Depository Receipt", "example": "Depository receipt created by a domestic depository in India for a company incorporated outside India."},
+        {"sub_section": "2(50)", "title": "Issued capital", "example": "Capital that the company issues from time to time for public or private subscription."},
+        {"sub_section": "2(51)", "title": "Key managerial personnel", "example": "Includes CEO, MD, Manager, Company Secretary, Whole-time Director, CFO, and prescribed officers."},
+        {"sub_section": "2(52)", "title": "Listed company", "example": "A company with any of its securities listed on a recognized stock exchange."},
+        {"sub_section": "2(53)", "title": "Manager", "example": "An individual having management of the whole or substantially the whole of the affairs of a company."},
+        {"sub_section": "2(54)", "title": "Managing director", "example": "A director entrusted with substantial powers of management of the affairs of the company."},
+        {"sub_section": "2(55)", "title": "Member", "example": "Subscriber to the memorandum, a person agreeing in writing to become a member, or a beneficial owner in depository records."},
+        {"sub_section": "2(56)", "title": "Memorandum", "example": "The memorandum of association of a company as originally framed or altered."},
+        {"sub_section": "2(57)", "title": "Net worth", "example": "Aggregate value of paid-up capital and free reserves minus accumulated losses and deferred expenditures."},
+        {"sub_section": "2(58)", "title": "Notification", "example": "A notification published in the Official Gazette."},
+        {"sub_section": "2(59)", "title": "Officer", "example": "Includes any director, manager, KMP, or person acting on whose instructions the Board functions."},
+        {"sub_section": "2(60)", "title": "Officer who is in default", "example": "Specific officers liable to penalties or punishment for statutory defaults under the Act."},
+        {"sub_section": "2(61)", "title": "Official Liquidator", "example": "An Official Liquidator appointed under section 59."},
+        {"sub_section": "2(62)", "title": "One Person Company", "example": "A company which has only one person as a member."},
+        {"sub_section": "2(63)", "title": "Ordinary or special resolution", "example": "Resolutions referred to in section 114."},
+        {"sub_section": "2(64)", "title": "Paid-up share capital", "example": "Aggregate amount of money paid-up or credited as paid-up in respect of shares issued."},
+        {"sub_section": "2(65)", "title": "Postal ballot", "example": "Voting by post or through electronic mode."},
+        {"sub_section": "2(66)", "title": "Prescribed", "example": "Prescribed by rules made under this Act."},
+        {"sub_section": "2(67)", "title": "Previous company law", "example": "Previous company acts such as the Companies Act, 1956 or 1913."},
+        {"sub_section": "2(68)", "title": "Private company", "example": "A company restricting share transfers, limiting members to 200, and prohibiting public invitations."},
+        {"sub_section": "2(69)", "title": "Promoter", "example": "Person named in prospectus/annual return, having control, or giving directions to the Board."},
+        {"sub_section": "2(70)", "title": "Prospectus", "example": "Any document/notice/circular inviting offers from the public for subscription of securities."},
+        {"sub_section": "2(71)", "title": "Public company", "example": "A company that is not a private company and has minimum prescribed capital."},
+        {"sub_section": "2(72)", "title": "Public financial institution", "example": "Includes LIC, IDFC, specified UTI companies, and government-controlled institutions."},
+        {"sub_section": "2(73)", "title": "Recognised stock exchange", "example": "Stock exchange recognized under section 2(f) of the Securities Contracts (Regulation) Act, 1956."},
+        {"sub_section": "2(74)", "title": "Register of companies", "example": "Register maintained by the Registrar on paper or electronically."},
+        {"sub_section": "2(75)", "title": "Registrar", "example": "Registrar, Additional, Joint, Deputy, or Assistant Registrar registering companies."},
+        {"sub_section": "2(76)", "title": "Related party", "example": "Includes directors, KMPs, their relatives, partner firms, or holding/subsidiary companies."},
+        {"sub_section": "2(77)", "title": "Relative", "example": "Includes members of HUF, husband and wife, or persons related in a prescribed manner."},
+        {"sub_section": "2(78)", "title": "Remuneration", "example": "Any money or perquisites given for services rendered under the Income-tax Act, 1961."},
+        {"sub_section": "2(79)", "title": "Schedule", "example": "A schedule annexed to this Act."},
+        {"sub_section": "2(80)", "title": "Scheduled bank", "example": "Bank defined under section 2(e) of the Reserve Bank of India Act, 1934."},
+        {"sub_section": "2(81)", "title": "Securities", "example": "Securities defined under section 2(h) of the Securities Contracts (Regulation) Act, 1956."},
+        {"sub_section": "2(82)", "title": "Securities and Exchange Board", "example": "SEBI established under section 3 of the SEBI Act, 1992."},
+        {"sub_section": "2(83)", "title": "Serious Fraud Investigation Office", "example": "SFIO office referred to in section 211."},
+        {"sub_section": "2(84)", "title": "Share", "example": "A share in the share capital of a company, including stock."},
+        {"sub_section": "2(85)", "title": "Small company", "example": "Company with paid-up capital and turnover below specified statutory limits (excluding public companies)."},
+        {"sub_section": "2(86)", "title": "Subscribed capital", "example": "Part of capital subscribed by company members for the time being."},
+        {"sub_section": "2(87)", "title": "Subsidiary company", "example": "Company in which the holding company controls board composition or more than half the total voting power."},
+        {"sub_section": "2(88)", "title": "Sweat equity shares", "example": "Equity shares issued to directors/employees at a discount for intellectual property or know-how."},
+        {"sub_section": "2(89)", "title": "Total voting power", "example": "Total number of votes castable on a poll if all members present and voting."},
+        {"sub_section": "2(90)", "title": "Tribunal", "example": "National Company Law Tribunal (NCLT) constituted under section 408."},
+        {"sub_section": "2(91)", "title": "Turnover", "example": "Gross revenue recognized in profit and loss account from goods/services sales."},
+        {"sub_section": "2(92)", "title": "Unlimited company", "example": "A company having no limit on the liability of its members."},
+        {"sub_section": "2(93)", "title": "Voting right", "example": "Right of a member to vote at meetings or through postal ballot."},
+        {"sub_section": "2(94)", "title": "Whole-time director", "example": "A director in whole-time employment of the company."},
+        {"sub_section": "2(94A)", "title": "Winding up", "example": "Winding up under this Act or liquidation under the Insolvency and Bankruptcy Code, 2016."},
+        {"sub_section": "2(95)", "title": "Words and expressions not defined", "example": "Undefined words take meanings from SCRA 1956, SEBI Act 1992, or Depositories Act 1996."}
+      ]
+    },
+    {
+      "section_number": "3",
+      "title": "Formation of company",
+      "example": "A public company requires 7 or more persons, a private company requires 2 or more, and an OPC requires 1 person subscribing to a memorandum."
+    },
+    {
+      "section_number": "3A",
+      "title": "Members severally liable in certain cases",
+      "example": "If a public company carries on business with fewer than 7 members (or private below 2) for more than 6 months, remaining knowledgeable members are severally liable for debts."
+    },
+    {
+      "section_number": "4",
+      "title": "Memorandum",
+      "example": "Defines the company name, registered office state, objects, liability, and share capital details."
+    },
+    {
+      "section_number": "5",
+      "title": "Articles",
+      "example": "Contains the internal regulations for managing the company, including optional entrenchment provisions."
+    },
+    {
+      "section_number": "6",
+      "title": "Act to override memorandum, articles, etc.",
+      "example": "Provisions of the Companies Act override any contrary clauses in the company's memorandum, articles, or agreements."
+    },
+    {
+      "section_number": "7",
+      "title": "Incorporation of company",
+      "example": "Filing necessary documents, professional declarations, and memorandum/articles with the Registrar to incorporate a company."
+    },
+    {
+      "section_number": "8",
+      "title": "Formation of companies with charitable objects, etc.",
+      "example": "Licensing a company formed for promoting commerce, art, science, charity, etc., without applying the word 'Limited'."
+    },
+    {
+      "section_number": "9",
+      "title": "Effect of registration",
+      "example": "Upon registration, the subscribers and members form a body corporate capable of exercising all functions of an incorporated company with perpetual succession."
+    },
+    {
+      "section_number": "10",
+      "title": "Effect of memorandum and articles",
+      "example": "Binding the company and its members to observe all provisions of the memorandum and articles as if signed by each member."
+    },
+    {
+      "section_number": "10A",
+      "title": "Commencement of business, etc.",
+      "example": "A company having share capital cannot commence business or exercise borrowing powers unless a verification declaration of subscriber payment is filed within 180 days."
+    },
+    {
+      "section_number": "11",
+      "title": "[Omitted.]",
+      "example": "This section was omitted by the Companies (Amendment) Act, 2015."
+    },
+    {
+      "section_number": "12",
+      "title": "Registered office of company",
+      "example": "A company must have a registered office capable of receiving communications within 30 days of incorporation."
+    },
+    {
+      "section_number": "13",
+      "title": "Alteration of memorandum",
+      "example": "A company can alter its name, object clause, or registered office state by passing a special resolution and obtaining central approval where necessary."
+    },
+    {
+      "section_number": "14",
+      "title": "Alteration of articles",
+      "example": "A company can alter its articles of association by passing a special resolution."
+    },
+    {
+      "section_number": "15",
+      "title": "Alteration of memorandum or articles to be noted in every copy",
+      "example": "Every copy of memorandum or articles issued after alteration must reflect the updated changes."
+    },
+    {
+      "section_number": "16",
+      "title": "Rectification of name of company",
+      "example": "If a company is registered with a name identical to an existing one, the Central Government can direct it to change its name within 3 months."
+    },
+    {
+      "section_number": "17",
+      "title": "Copies of memorandum, articles, etc., to be given to members",
+      "example": "Company must send copies of its memorandum, articles, and agreements to members upon request and payment of a fee."
+    },
+    {
+      "section_number": "18",
+      "title": "Conversion of companies already registered",
+      "example": "Conversion of an existing company from private to public or limited to unlimited through proper alteration of memorandum/articles."
+    },
+    {
+      "section_number": "19",
+      "title": "Subsidiary company not to hold shares in its holding company",
+      "example": "A subsidiary company cannot hold shares in its holding company except in specific trustee or representative capacities."
+    },
+    {
+      "section_number": "20",
+      "title": "Service of documents",
+      "example": "Serving documents on a company or its officer by registered post, speed post, email, or leaving it at the registered office."
+    },
+    {
+      "section_number": "21",
+      "title": "Authentication of documents, proceedings and contracts",
+      "example": "A document or proceeding requiring authentication may be signed by a key managerial personnel or an authorized director."
+    },
+    {
+      "section_number": "22",
+      "title": "Execution of bills of exchange, etc.",
+      "example": "Bills of exchange, hundi, or promissory note are deemed made/accepted/endorsed on behalf of a company if done by an authorized person."
+    },
+    {
+      "section_number": "23",
+      "title": "Public offer and private placement",
+      "example": "A public company may issue securities through public offer or private placement; a private company may issue via private placement or rights/bonus issue."
+    },
+    {
+      "section_number": "24",
+      "title": "Power of Securities and Exchange Board to regulate issue and transfer of securities, etc.",
+      "example": "SEBI regulates matters relating to public issue, transfer of securities, and non-payment of dividends for listed public companies."
+    },
+    {
+      "section_number": "25",
+      "title": "Document containing offer of securities for sale to be deemed prospectus",
+      "example": "Any document inviting offers for the sale of securities to the public is treated as a statutory prospectus."
+    },
+    {
+      "section_number": "26",
+      "title": "Matters to be stated in prospectus",
+      "example": "A prospectus must state specific financial details, reports, and statutory declarations as mandated by SEBI and the Act."
+    },
+    {
+      "section_number": "27",
+      "title": "Variation in terms of contract or objects in prospectus",
+      "example": "A company cannot vary the objects stated in a prospectus except by passing a special resolution through postal ballot."
+    },
+    {
+      "section_number": "28",
+      "title": "Offer of sale of shares by certain members of company",
+      "example": "Certain members may offer part of their shareholdings to the public with company approval, treating the document as a prospectus."
+    },
+    {
+      "section_number": "29",
+      "title": "Public offer of securities to be in dematerialised form",
+      "example": "Public companies issuing securities must issue them only in dematerialized form through a depository."
+    },
+    {
+      "section_number": "30",
+      "title": "Advertisement of prospectus",
+      "example": "When a prospectus advertisement is published, it must specify the contents regarding memorandum objects and liability of members."
+    },
+    {
+      "section_number": "31",
+      "title": "Shelf prospectus",
+      "example": "Financial institutions or banks may file a shelf prospectus valid up to one year for issuing multiple classes of securities."
+    },
+    {
+      "section_number": "32",
+      "title": "Red herring prospectus",
+      "example": "An issuer may issue a red herring prospectus prior to the issue of a prospectus without complete quantum/price details."
+    },
+    {
+      "section_number": "33",
+      "title": "Issue of application forms for securities",
+      "example": "Application forms for securities must be accompanied by an abridged prospectus."
+    },
+    {
+      "section_number": "34",
+      "title": "Criminal liability for mis-statements in prospectus",
+      "example": "Any person who authorizes the issue of a prospectus containing untrue or misleading statements is punishable for fraud under section 447."
+    },
+    {
+      "section_number": "35",
+      "title": "Civil liability for mis-statements in prospectus",
+      "example": "Persons who sustain loss or damage due to untrue statements in a prospectus can claim compensation from the company and directors."
+    },
+    {
+      "section_number": "36",
+      "title": "Punishment for fraudulently inducing persons to invest money",
+      "example": "Knowingly making false or deceptive statements to induce persons to invest money is punishable under section 447."
+    },
+    {
+      "section_number": "37",
+      "title": "Action by affected persons",
+      "example": "Suits can be filed or actions taken by any person or group affected by misleading prospectuses under section 34 or 35."
+    },
+    {
+      "section_number": "38",
+      "title": "Punishment for personation for acquisition, etc., of securities",
+      "example": "Fictitiously applying for or acquiring securities in another person's name is punishable with imprisonment."
+    },
+    {
+      "section_number": "39",
+      "title": "Allotment of securities by company",
+      "example": "No allotment of securities can be made unless the minimum subscription amount stated in the prospectus has been received."
+    },
+    {
+      "section_number": "40",
+      "title": "Securities to be dealt with in stock exchanges",
+      "example": "A company making a public offer must apply to one or more recognized stock exchanges for listing its securities."
+    },
+    {
+      "section_number": "41",
+      "title": "Global depository receipt",
+      "example": "A company may issue Global Depository Receipts (GDRs) abroad after passing a special resolution."
+    },
+    {
+      "section_number": "42",
+      "title": "Issue of shares on private placement basis",
+      "example": "A company can issue securities on a private placement basis to a select group of persons (not exceeding 200) through a private placement offer letter."
+    },
+    {
+      "section_number": "43",
+      "title": "Kinds of share capital",
+      "example": "Share capital of a company limited by shares can be of two kinds: Equity share capital (with voting or differential rights) and Preference share capital."
+    },
+    {
+      "section_number": "44",
+      "title": "Nature of shares or debentures",
+      "example": "Shares or debentures or other interests of any member in a company are movable property transferable in the manner provided by the articles."
+    },
+    {
+      "section_number": "45",
+      "title": "Numbering of shares",
+      "example": "Every share in a company having a share capital must be distinguished by its appropriate number."
+    },
+    {
+      "section_number": "46",
+      "title": "Certificate of shares",
+      "example": "A certificate under the common seal specifying shares held by any person is prima facie evidence of title."
+    },
+    {
+      "section_number": "47",
+      "title": "Voting rights",
+      "example": "Every member of a company holding equity share capital has a voting right on a poll in proportion to their share in the paid-up equity capital."
+    },
+    {
+      "section_number": "48",
+      "title": "Variation of shareholders' rights",
+      "example": "Rights attached to shares of any class can be varied with the consent of holders of not less than three-fourths of the issued shares of that class."
+    },
+    {
+      "section_number": "49",
+      "title": "Calls on shares of same class to be made on uniform basis",
+      "example": "Calls for payment on shares of the same class must be made on a uniform basis across all shareholders."
+    },
+    {
+      "section_number": "50",
+      "title": "Company to accept unpaid share capital, although not called up",
+      "example": "A company may accept from any member advance payments on uncalled capital if authorized by its articles."
+    },
+    {
+      "section_number": "51",
+      "title": "Payment of dividend in proportion to amount paid-up",
+      "example": "A company can pay dividends in proportion to the amount paid-up on each share if authorized by its articles."
+    },
+    {
+      "section_number": "52",
+      "title": "Application of premiums received on issue of shares",
+      "example": "Securities premium account can be used for issuing bonus shares, writing off preliminary expenses, or buying back shares under section 68."
+    },
+    {
+      "section_number": "53",
+      "title": "Prohibition on issue of shares at discount",
+      "example": "A company cannot issue shares at a discount, except for sweat equity shares issued under section 54."
+    },
+    {
+      "section_number": "54",
+      "title": "Issues of sweat equity shares",
+      "example": "A company can issue sweat equity shares of a class already issued to directors or employees at a discount for providing know-how."
+    },
+    {
+      "section_number": "55",
+      "title": "Issue and redemption of preference shares",
+      "example": "A company can issue preference shares redeemable within a period not exceeding 20 years from the date of issue."
+    },
+    {
+      "section_number": "56",
+      "title": "Transfer and transmission of securities",
+      "example": "Transfer of securities requires a proper instrument of transfer delivered to the company within the prescribed timeframe."
+    },
+    {
+      "section_number": "57",
+      "title": "Punishment for personation of shareholder",
+      "example": "Falsely personating any shareholder to obtain shares or benefit is punishable with imprisonment."
+    },
+    {
+      "section_number": "58",
+      "title": "Refusal of registration and appeal against refusal",
+      "example": "If a private company refuses to register share transfers, it must send notice within 30 days, and the transferee can appeal to the Tribunal."
+    },
+    {
+      "section_number": "59",
+      "title": "Rectification of register of members",
+      "example": "If a person's name is fraudulently omitted or entered in the register of members, the Tribunal may order rectification and payment of damages."
+    },
+    {
+      "section_number": "60",
+      "title": "Publication of authorised, subscribed and paid-up capital",
+      "example": "When a company publishes its authorized capital, it must also conspicuously display its subscribed and paid-up capital."
+    },
+    {
+      "section_number": "61",
+      "title": "Power of limited company to alter its share capital",
+      "example": "A limited company may alter its share capital by increasing capital, consolidating shares, or canceling unissued shares through an ordinary resolution."
+    },
+    {
+      "section_number": "62",
+      "title": "Further issue of share capital",
+      "example": "When increasing subscribed capital, further shares must first be offered to existing equity shareholders on a pro-rata basis (rights issue)."
+    },
+    {
+      "section_number": "63",
+      "title": "Issue of bonus shares",
+      "example": "A company may issue fully paid-up bonus shares to members out of its free reserves, securities premium account, or capital redemption reserve."
+    },
+    {
+      "section_number": "64",
+      "title": "Notice to be given to Registrar for alteration of share capital",
+      "example": "Company must file a notice with the Registrar within 30 days of altering share capital or redemption of redeemable preference shares."
+    },
+    {
+      "section_number": "65",
+      "title": "Unlimited company to provide for reserve share capital on conversion into limited company",
+      "example": "An unlimited company converting to a limited company must increase nominal capital and designate reserve share capital calling upon winding up."
+    },
+    {
+      "section_number": "66",
+      "title": "Reduction of share capital",
+      "example": "A company can reduce its share capital by special resolution and Tribunal confirmation, canceling paid-up capital that is lost or unrepresented by assets."
+    },
+    {
+      "section_number": "67",
+      "title": "Restrictions on purchase by company or giving of loans by it for purchase of its shares",
+      "example": "A company limited by shares cannot buy its own shares unless through authorized buy-back provisions under section 68."
+    },
+    {
+      "section_number": "68",
+      "title": "Power of company to purchase its own securities",
+      "example": "A company may purchase its own shares or other specified securities out of free reserves, securities premium, or proceeds of prior issues (buy-back)."
+    },
+    {
+      "section_number": "69",
+      "title": "Transfer of certain sums to capital redemption reserve account",
+      "example": "When a company buys back shares out of free reserves or securities premium, a sum equal to the nominal value of shares bought back must be transferred to the Capital Redemption Reserve account."
+    },
+    {
+      "section_number": "70",
+      "title": "Prohibition for buy-back in certain circumstances",
+      "example": "A company cannot directly or indirectly purchase its own shares through any subsidiary company or investment/financial institution."
+    },
+    {
+      "section_number": "71",
+      "title": "Debentures",
+      "example": "A company may issue debentures with an option to convert them into shares, subject to a special resolution passed at a general meeting."
+    },
+    {
+      "section_number": "72",
+      "title": "Power to nominate",
+      "example": "Every holder of securities of a company may nominate a person to whom securities shall vest in the event of death."
+    },
+    {
+      "section_number": "73",
+      "title": "Prohibition on acceptance of deposits from public",
+      "example": "No company can invite, accept, or renew deposits from the public except in the manner provided under Chapter V."
+    },
+    {
+      "section_number": "74",
+      "title": "Repayment of deposits, etc., accepted before commencement of this Act",
+      "example": "Deposits accepted prior to the commencement of the Act must be repaid within three years or as specified by the Tribunal."
+    },
+    {
+      "section_number": "75",
+      "title": "Damages for fraud",
+      "example": "If a company fails to repay deposits due to fraud, officers responsible are punishable for fraud under section 447."
+    },
+    {
+      "section_number": "76",
+      "title": "Acceptance of deposits from public by certain companies",
+      "example": "Eligible public companies satisfying net worth/turnover criteria can accept deposits from the public with proper credit ratings."
+    },
+    {
+      "section_number": "76A",
+      "title": "Punishment for contravention of section 73 or section 76",
+      "example": "Companies accepting deposits in contravention of rules face heavy monetary fines and penal liabilities for officers."
+    },
+    {
+      "section_number": "77",
+      "title": "Duty to register charges, etc.",
+      "example": "It is the duty of a company to create or modify charges on its property or assets and register them with the Registrar within 30 days."
+    },
+    {
+      "section_number": "78",
+      "title": "Application for registration of charge",
+      "example": "If a company fails to register a charge within 30 days, the person in whose favor the charge is created can apply to the Registrar for registration."
+    },
+    {
+      "section_number": "79",
+      "title": "Section 77 to apply in certain matters",
+      "example": "Provisions relating to registration of charges apply to property acquired subject to a charge or modification of charges."
+    },
+    {
+      "section_number": "80",
+      "title": "Date of notice of charge",
+      "example": "Registration of a charge serves as notice to any person acquiring property of the company from the date of registration."
+    },
+    {
+      "section_number": "81",
+      "title": "Register of charges to be kept by Registrar",
+      "example": "The Registrar must keep a register of charges for each company containing property particulars open for public inspection."
+    },
+    {
+      "section_number": "82",
+      "title": "Company to report satisfaction of charge",
+      "example": "A company must report the payment or satisfaction of any registered charge to the Registrar within 30 days of satisfaction."
+    },
+    {
+      "section_number": "83",
+      "title": "Power of Registrar to make entries of satisfaction and release in absence of intimation from company",
+      "example": "Registrar may enter satisfaction or release of charges on receipt of evidence even if the company fails to report."
+    },
+    {
+      "section_number": "84",
+      "title": "Intimation of appointment of receiver or manager",
+      "example": "Persons obtaining an order for appointment of a receiver or manager of company property must give notice to the company and Registrar."
+    },
+    {
+      "section_number": "85",
+      "title": "Company's register of charges",
+      "example": "Every company must maintain a register of charges at its registered office detailing all property mortgages and charges."
+    },
+    {
+      "section_number": "86",
+      "title": "Punishment for contravention",
+      "example": "Any default by a company in complying with registration of charges provisions attracts fines for the company and officers in default."
+    },
+    {
+      "section_number": "87",
+      "title": "Rectification by Central Government in Register of charges",
+      "example": "Central Government may rectify omissions or misstatements regarding the creation, modification, or satisfaction of charges if satisfied it was accidental."
+    },
+    {
+      "section_number": "88",
+      "title": "Register of members, etc.",
+      "example": "Every company must keep a register of members, debenture holders, and other security holders detailing holdings."
+    },
+    {
+      "section_number": "89",
+      "title": "Declaration in respect of beneficial interest in any share",
+      "example": "A person whose name is entered in the register of members as holding shares without beneficial interest must declare the actual beneficial owner."
+    },
+    {
+      "section_number": "90",
+      "title": "Register of significant beneficial owners in a Company",
+      "example": "Every significant beneficial owner must file a declaration disclosing their beneficial interest holding thresholds to the company."
+    },
+    {
+      "section_number": "91",
+      "title": "Power to close register of members or debenture holders or other security holders",
+      "example": "A company may close registers of members for up to 45 days in a year in total by giving 7 days' previous notice."
+    },
+    {
+      "section_number": "92",
+      "title": "Annual return",
+      "example": "Every company must prepare an annual return containing registered office details, shareholding structure, and indebtedness."
+    },
+    {
+      "section_number": "93",
+      "title": "[Omitted.]",
+      "example": "This section relating to return updates by listed companies was omitted."
+    },
+    {
+      "section_number": "94",
+      "title": "Place of keeping and inspection of registers, returns, etc.",
+      "example": "Registers and returns must be kept at the registered office and can be inspected by members or debenture holders during business hours."
+    },
+    {
+      "section_number": "95",
+      "title": "Registers, etc., to be evidence",
+      "example": "Registers, indices, and annual returns maintained under Chapter VII are prima facie evidence of matters directed or authorized to be inserted."
+    },
+    {
+      "section_number": "96",
+      "title": "Annual general meeting",
+      "example": "Every company must hold an Annual General Meeting (AGM) every year, with the first AGM held within 9 months of the financial year end."
+    },
+    {
+      "section_number": "97",
+      "title": "Power of Tribunal to call annual general meeting",
+      "example": "If a company defaults in holding an AGM, the Tribunal may call or direct the calling of an AGM upon application by any member."
+    },
+    {
+      "section_number": "98",
+      "title": "Power of Tribunal to call meetings of members, etc.",
+      "example": "Tribunal may order a meeting of the company to be called, held, and conducted if it is impracticable to call a meeting otherwise."
+    },
+    {
+      "section_number": "99",
+      "title": "Punishment for default in complying with provisions of sections 96 to 98",
+      "example": "Failure to hold AGMs or comply with Tribunal orders results in fines for the company and officers in default."
+    },
+    {
+      "section_number": "100",
+      "title": "Calling of extraordinary general meeting",
+      "example": "The Board may call an Extraordinary General Meeting (EGM) whenever it thinks fit, or upon requisition by members holding at least 10% paid-up capital."
+    },
+    {
+      "section_number": "101",
+      "title": "Notice of meeting",
+      "example": "General meetings require at least 21 days' clear notice in writing or through electronic mode."
+    },
+    {
+      "section_number": "102",
+      "title": "Statement to be annexed to notice",
+      "example": "An explanatory statement setting out material facts concerning special business items must be annexed to the notice of every general meeting."
+    },
+    {
+      "section_number": "103",
+      "title": "Quorum for meetings",
+      "example": "Quorum for general meetings requires 5 members for public companies and 2 members for private companies personally present, unless articles provide higher numbers."
+    },
+    {
+      "section_number": "104",
+      "title": "Chairman of meetings",
+      "example": "Members personally present at the meeting shall elect one of themselves to be the Chairman unless articles provide otherwise."
+    },
+    {
+      "section_number": "105",
+      "title": "Proxies",
+      "example": "A member entitled to attend and vote can appoint another person as a proxy to attend and vote on their behalf."
+    },
+    {
+      "section_number": "106",
+      "title": "Restriction on voting rights",
+      "example": "Articles cannot restrict a member from voting on any ground other than unpaid calls or sums due on shares."
+    },
+    {
+      "section_number": "107",
+      "title": "Voting by show of hands",
+      "example": "At any general meeting, a resolution put to vote shall initially be decided on a show of hands unless a poll is demanded."
+    },
+    {
+      "section_number": "108",
+      "title": "Voting through electronic means",
+      "example": "Companies having listed securities or specified numbers of members must provide facility for remote e-voting."
+    },
+    {
+      "section_number": "109",
+      "title": "Demand for poll",
+      "example": "Before or on the declaration of the result of voting on show of hands, a poll may be ordered by the Chairman or demanded by members."
+    },
+    {
+      "section_number": "110",
+      "title": "Postal ballot",
+      "example": "A company may transact any item of business by sending postal ballot notices to all shareholders instead of convening a physical meeting."
+    },
+    {
+      "section_number": "111",
+      "title": "Circulation of members' resolution",
+      "example": "Company must circulate notice of resolutions proposed by requisite numbers of members at members' expense."
+    },
+    {
+      "section_number": "112",
+      "title": "Representation of President and Governors in meetings",
+      "example": "The President of India or Governor of a State, if holding shares, may appoint a representative to attend company meetings."
+    },
+    {
+      "section_number": "113",
+      "title": "Representation of corporations at meeting of companies and of creditors",
+      "example": "A body corporate holding shares or being a creditor can authorize a person to act as its representative at general meetings."
+    },
+    {
+      "section_number": "114",
+      "title": "Ordinary and special resolutions",
+      "example": "An ordinary resolution requires a simple majority vote (50%+), whereas a special resolution requires at least a three-fourths majority vote (75%+)."
+    },
+    {
+      "section_number": "115",
+      "title": "Resolutions requiring special notice",
+      "example": "Where special notice is required by the Act for a resolution (e.g., removing an auditor), intention to move must be given 14 days prior."
+    },
+    {
+      "section_number": "116",
+      "title": "Resolutions passed at adjourned meeting",
+      "example": "Resolutions passed at an adjourned general meeting or board meeting are treated as passed on the actual date they were passed, not retroactively."
+    },
+    {
+      "section_number": "117",
+      "title": "Resolutions and agreements to be filed",
+      "example": "Copies of special resolutions and specified agreements must be filed with the Registrar within 30 days of passing."
+    },
+    {
+      "section_number": "118",
+      "title": "Minutes of proceedings of general meeting, meeting of Board of Directors and other meeting and resolutions passed by postal ballot",
+      "example": "Every company must prepare and sign minutes of all general and board meetings within 30 days of conclusion."
+    },
+    {
+      "section_number": "119",
+      "title": "Inspection of minute-books of general meeting",
+      "example": "Books containing minutes of general meetings must be kept at the registered office and open for free inspection by members."
+    },
+    {
+      "section_number": "120",
+      "title": "Maintenance and inspection of documents in electronic form",
+      "example": "Any document, register, or minute book required by the Act can be maintained and inspected in electronic form."
+    },
+    {
+      "section_number": "121",
+      "title": "Report on annual general meeting",
+      "example": "Every listed public company must prepare a report on each annual general meeting and file it with the Registrar."
+    },
+    {
+      "section_number": "122",
+      "title": "Applicability of this Chapter to One Person Company",
+      "example": "For an OPC, requirements of AGM, EGM, and meeting notices are satisfied if resolutions are communicated in writing and signed."
+    },
+    {
+      "section_number": "123",
+      "title": "Declaration of dividend",
+      "example": "Dividends can be declared or paid out of current profits or accumulated profits of previous years after providing for depreciation."
+    },
+    {
+      "section_number": "124",
+      "title": "Unpaid Dividend Account",
+      "example": "Unpaid or unclaimed dividend must be transferred to a special 'Unpaid Dividend Account' opened in a scheduled bank within 30 days."
+    },
+    {
+      "section_number": "125",
+      "title": "Investor Education and Protection Fund",
+      "example": "Central Government establishes an IEPF to credit unclaimed dividends, matured deposits, and application money for promotion of investor awareness."
+    },
+    {
+      "section_number": "126",
+      "title": "Right to dividend, rights shares and bonus shares to be held in abeyance pending registration of transfer of shares",
+      "example": "When a share transfer is pending registration, the company must keep related dividends, rights shares, and bonus shares in abeyance."
+    },
+    {
+      "section_number": "127",
+      "title": "Punishment for failure to distribute dividends",
+      "example": "If a dividend declared is not paid within 30 days, penal interest is levied on directors in default along with imprisonment terms."
+    },
+    {
+      "section_number": "128",
+      "title": "Books of account, etc., to be kept by company",
+      "example": "Every company must maintain proper books of accounts and financial records at its registered office on an accrual basis."
+    },
+    {
+      "section_number": "129",
+      "title": "Financial statement",
+      "example": "Financial statements must give a true and fair view of the state of affairs of the company and comply with accounting standards."
+    },
+    {
+      "section_number": "129A",
+      "title": "Periodical financial results",
+      "example": "Specified classes of companies must prepare periodical financial results as may be prescribed."
+    },
+    {
+      "section_number": "130",
+      "title": "Re-opening of accounts on court's or Tribunal's orders",
+      "example": "Accounts can be re-opened on orders of a court or Tribunal if earlier accounts were prepared fraudulently or mismanaged."
+    },
+    {
+      "section_number": "131",
+      "title": "Voluntary revision of financial statements or Board's report",
+      "example": "If financial statements do not comply with section 129, a company may voluntarily revise statements with Tribunal approval."
+    },
+    {
+      "section_number": "132",
+      "title": "Constitution of National Financial Reporting Authority",
+      "example": "Central Government constitutes the NFRA to monitor accounting and auditing standards and investigate professional misconduct."
+    },
+    {
+      "section_number": "133",
+      "title": "Central Government to prescribe accounting standards",
+      "example": "Central Government prescribes accounting standards recommended by ICAI in consultation with NFRA."
+    },
+    {
+      "section_number": "134",
+      "title": "Financial statement, Board's report, etc.",
+      "example": "Financial statements must be approved by the Board of Directors and signed before submission to auditors, containing a Board's report."
+    },
+    {
+      "section_number": "135",
+      "title": "Corporate Social Responsibility",
+      "example": "Companies meeting specific net worth, turnover, or net profit thresholds must constitute a CSR committee and spend 2% of average net profits."
+    },
+    {
+      "section_number": "136",
+      "title": "Right of member to copies of audited financial statement",
+      "example": "A copy of audited financial statements, auditor's report, and other documents must be sent to every member at least 21 days before the AGM."
+    },
+    {
+      "section_number": "137",
+      "title": "Copy of financial statement to be filed with Registrar",
+      "example": "A copy of financial statements adopted at the AGM must be filed with the Registrar within 30 days."
+    },
+    {
+      "section_number": "138",
+      "title": "Internal Audit",
+      "example": "Specified classes of companies must conduct an internal audit of functions and activities through a chartered accountant or cost accountant."
+    },
+    {
+      "section_number": "139",
+      "title": "Appointment of auditors",
+      "example": "Every company shall appoint an individual or audit firm as an auditor at the first AGM who shall hold office till the sixth AGM."
+    },
+    {
+      "section_number": "140",
+      "title": "Removal, resignation of auditor and giving of special notice",
+      "example": "An auditor appointed can be removed before term expiry by passing a special resolution with Central Government approval."
+    },
+    {
+      "section_number": "141",
+      "title": "Eligibility, qualifications and disqualifications of auditors",
+      "example": "Only a chartered accountant holding a certificate of practice can be appointed as an auditor, avoiding disqualifications like being indebted or holding securities."
+    },
+    {
+      "section_number": "142",
+      "title": "Remuneration of auditors",
+      "example": "Remuneration of an auditor is fixed in the general meeting or in such manner as the general meeting may determine."
+    },
+    {
+      "section_number": "143",
+      "title": "Powers and duties of auditors and auditing standards",
+      "example": "Auditors have right of access to books of accounts and must report whether financial statements give a true and fair view."
+    },
+    {
+      "section_number": "144",
+      "title": "Auditor not to render certain services",
+      "example": "An auditor cannot provide non-audit services like investment banking, internal audit, or management services directly or indirectly to the company."
+    },
+    {
+      "section_number": "145",
+      "title": "Auditor to sign audit reports, etc.",
+      "example": "The person appointed as auditor shall sign the audit report or other documents certified on behalf of the company."
+    },
+    {
+      "section_number": "146",
+      "title": "Auditors to attend general meeting",
+      "example": "Auditors or their authorized representatives must attend all general meetings unless exempted by the company."
+    },
+    {
+      "section_number": "147",
+      "title": "Punishment for contravention",
+      "example": "Any contravention of audit provisions by a company or auditor results in heavy monetary fines and imprisonment liabilities."
+    },
+    {
+      "section_number": "148",
+      "title": "Central Government to specify audit of items of cost in respect of certain companies",
+      "example": "Central Government may direct companies engaged in production or manufacturing to conduct a cost audit of accounts."
+    },
+    {
+      "section_number": "149",
+      "title": "Company to have Board of Directors",
+      "example": "Every company must have a Board of Directors consisting of individuals, with public companies maintaining minimum independent directors."
+    },
+    {
+      "section_number": "150",
+      "title": "Manner of selection of independent directors and maintenance of data bank of independent directors",
+      "example": "Independent directors are selected from a data bank maintained by an authorized institute or body."
+    },
+    {
+      "section_number": "151",
+      "title": "Appointment of director elected by small shareholders",
+      "example": "A listed company may have one director elected by small shareholders holding shares up to Rs. 20,000."
+    },
+    {
+      "section_number": "152",
+      "title": "Appointment of directors",
+      "example": "Directors are appointed by shareholders at general meetings, requiring a Director Identification Number (DIN)."
+    },
+    {
+      "section_number": "153",
+      "title": "Application for allotment of Director Identification Number",
+      "example": "An individual intending to be a director must apply to the Central Government for an electronic Director Identification Number (DIN)."
+    },
+    {
+      "section_number": "154",
+      "title": "Allotment of Director Identification Number",
+      "example": "Central Government allots a unique DIN to the applicant within one month of receiving an application."
+    },
+    {
+      "section_number": "155",
+      "title": "Prohibition to obtain more than one Director Identification Number",
+      "example": "No individual who has already been allotted a DIN can apply for, obtain, or possess another DIN."
+    },
+    {
+      "section_number": "156",
+      "title": "Director to intimate Director Identification Number",
+      "example": "A director must intimate their DIN to all companies where they hold directorship within one month of receipt."
+    },
+    {
+      "section_number": "157",
+      "title": "Company to inform Director Identification Number to Registrar",
+      "example": "Company must furnish the DIN of its directors to the Registrar within 15 days of receiving intimation."
+    },
+    {
+      "section_number": "158",
+      "title": "Obligation to indicate Director Identification Number",
+      "example": "Every return, information, or application sent under the Act must indicate the DIN of the signing director."
+    },
+    {
+      "section_number": "159",
+      "title": "Penalty for default of certain provisions",
+      "example": "Failure to comply with sections 152, 155, or 156 attracts penalties and fines for individuals and officers."
+    },
+    {
+      "section_number": "160",
+      "title": "Right of persons other than retiring directors to stand for directorship",
+      "example": "A person who is not a retiring director can stand for directorship by giving notice and depositing Rs. 1 lakh."
+    },
+    {
+      "section_number": "161",
+      "title": "Appointment of additional director, alternate director and nominee director",
+      "example": "The Board may appoint additional directors who shall hold office up to the date of the next annual general meeting."
+    },
+    {
+      "section_number": "162",
+      "title": "Appointment of directors to be voted individually",
+      "example": "At a general meeting, a motion for appointment of two or more directors as a single resolution cannot be made unless voted unanimously."
+    },
+    {
+      "section_number": "163",
+      "title": "Option to adopt principle of proportional representation for appointment of directors",
+      "example": "Articles of a company may provide for appointment of not less than two-thirds of directors via proportional representation."
+    },
+    {
+      "section_number": "164",
+      "title": "Disqualifications for appointment of director",
+      "example": "An individual is disqualified from being appointed as a director if of unsound mind, undischarged bankrupt, or convicted of an offense involving moral turpitude."
+    },
+    {
+      "section_number": "165",
+      "title": "Number of directorships",
+      "example": "An individual cannot hold directorships in more than 20 companies concurrently, with a maximum of 10 public companies."
+    },
+    {
+      "section_number": "166",
+      "title": "Duties of directors",
+      "example": "A director must act in accordance with the company articles, act in good faith, exercise independent judgment, and avoid conflicts of interest."
+    },
+    {
+      "section_number": "167",
+      "title": "Vacation of office of director",
+      "example": "Office of a director becomes vacant if they incur disqualifications under section 164, absent themselves from board meetings for 12 months, or breach contracts."
+    },
+    {
+      "section_number": "168",
+      "title": "Resignation of director",
+      "example": "A director may resign by giving notice in writing to the company, and the company shall intimate the Registrar within 30 days."
+    },
+    {
+      "section_number": "169",
+      "title": "Removal of directors",
+      "example": "A company may remove a director before the expiration of their term by passing an ordinary resolution after giving an opportunity of hearing."
+    },
+    {
+      "section_number": "170",
+      "title": "Register of directors and key managerial personnel and their shareholding",
+      "example": "Every company must keep a register of its directors and KMPs containing details of securities held by them."
+    },
+    {
+      "section_number": "171",
+      "title": "Members' right to inspect",
+      "example": "Registers of directors and KMPs must be kept open for inspection by members during business hours."
+    },
+    {
+      "section_number": "172",
+      "title": "Penalty",
+      "example": "If a company contravenes provisions of Chapter XI for which no specific penalty is provided, the company and officers are liable to fines."
+    },
+    {
+      "section_number": "173",
+      "title": "Meetings of Board",
+      "example": "Every company must hold at least 4 board meetings every year with a maximum gap of 120 days between two consecutive meetings."
+    },
+    {
+      "section_number": "174",
+      "title": "Quorum for meetings of Board",
+      "example": "Quorum for a board meeting is one-third of total strength or two directors, whichever is higher."
+    },
+    {
+      "section_number": "175",
+      "title": "Passing of resolution by circulation",
+      "example": "Resolutions can be passed by circulation if draft resolutions are sent to all directors and approved by a majority."
+    },
+    {
+      "section_number": "176",
+      "title": "Defects in appointment of directors not to invalidate actions taken",
+      "example": "Acts done by a director are valid even if it is afterwards discovered that their appointment was invalid due to a defect."
+    },
+    {
+      "section_number": "177",
+      "title": "Audit committee",
+      "example": "Every listed company and specified public companies must constitute an Audit Committee consisting of minimum 3 directors with independent majority."
+    },
+    {
+      "section_number": "178",
+      "title": "Nomination and Remuneration Committee and Stakeholders Relationship Committee",
+      "example": "Specified companies must constitute Nomination and Remuneration Committees and Stakeholders Relationship Committees."
+    },
+    {
+      "section_number": "179",
+      "title": "Powers of Board",
+      "example": "Board of Directors is entitled to exercise all powers and do all acts that the company is authorized to do."
+    },
+    {
+      "section_number": "180",
+      "title": "Restrictions on powers of Board",
+      "example": "Board cannot sell, lease, or dispose of undertaking, invest compensation, or borrow money beyond paid-up capital without shareholder approval."
+    },
+    {
+      "section_number": "181",
+      "title": "Company to contribute to bona fide and charitable funds, etc.",
+      "example": "Company may contribute to bona fide charitable funds up to 5% of average net profits for the preceding three financial years."
+    },
+    {
+      "section_number": "182",
+      "title": "Prohibitions and restrictions regarding political contributions",
+      "example": "Government companies and companies in existence for less than 3 financial years cannot make political contributions."
+    },
+    {
+      "section_number": "183",
+      "title": "Power of Board and other persons to make contributions to national defence fund, etc.",
+      "example": "Board of Directors may contribute any amount to the National Defence Fund or other approved funds."
+    },
+    {
+      "section_number": "184",
+      "title": "Disclosure of interest by director",
+      "example": "Every director must disclose their concern or interest in any company, body corporate, or firm at the first board meeting."
+    },
+    {
+      "section_number": "185",
+      "title": "Loan to directors, etc.",
+      "example": "Company cannot advance any loan or give guarantees/security to any director or persons in whom the director is interested."
+    },
+    {
+      "section_number": "186",
+      "title": "Loan and investment by company",
+      "example": "Company cannot give loans, make investments, or provide guarantees beyond specified limits without special resolution approval."
+    },
+    {
+      "section_number": "187",
+      "title": "Investments of company to be held in its own name",
+      "example": "All investments made by a company must be held and registered in its own name, with limited exceptions for subsidiaries."
+    },
+    {
+      "section_number": "188",
+      "title": "Related party transactions",
+      "example": "Contracts or arrangements with related parties require prior board approval and shareholder resolution where limits are exceeded."
+    },
+    {
+      "section_number": "189",
+      "title": "Register of contracts or arrangements in which directors are interested",
+      "example": "Every company must maintain a register detailing contracts or arrangements in which directors are interested."
+    },
+    {
+      "section_number": "190",
+      "title": "Contract of employment with managing or whole-time directors",
+      "example": "Copies of employment contracts with managing or whole-time directors must be kept open for inspection by members."
+    },
+    {
+      "section_number": "191",
+      "title": "Payment to director for loss of office, etc., in connection with transfer of undertaking, property or shares",
+      "example": "No payment for loss of office can be made to a director in connection with transfer of company undertaking without member approval."
+    },
+    {
+      "section_number": "192",
+      "title": "Restriction on non-cash transactions involving directors",
+      "example": "Non-cash assets acquired from or transferred to directors require prior approval by a resolution in a general meeting."
+    },
+    {
+      "section_number": "193",
+      "title": "Contract by One Person Company",
+      "example": "If an OPC enters a contract with its sole member who is also a director, terms must be recorded in minutes or memorandum."
+    },
+    {
+      "section_number": "194",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding prohibition on forward dealings in securities by directors."
+    },
+    {
+      "section_number": "195",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding prohibition on insider trading of securities."
+    },
+    {
+      "section_number": "196",
+      "title": "Appointment of managing director, whole-time director or manager",
+      "example": "No company can appoint or re-appoint a managing director or manager for a term exceeding 5 years at a time."
+    },
+    {
+      "section_number": "197",
+      "title": "Overall maximum managerial remuneration and managerial remuneration in case of absence or inadequacy of profits",
+      "example": "Total managerial remuneration payable by a public company shall not exceed 11% of net profits of the company."
+    },
+    {
+      "section_number": "198",
+      "title": "Calculation of profits",
+      "example": "Computation of net profits for managerial remuneration is calculated by deducting specified working expenses, taxes, and bounties."
+    },
+    {
+      "section_number": "199",
+      "title": "Recovery of remuneration in certain cases",
+      "example": "If financial statements are restated due to fraud, the company must recover excess remuneration paid to managing directors."
+    },
+    {
+      "section_number": "200",
+      "title": "Central Government or company to fix limit with regard to remuneration",
+      "example": "When fixing managerial remuneration, companies must have regard to financial position, industry standards, and qualifications."
+    },
+    {
+      "section_number": "201",
+      "title": "Forms of, and procedure in relation to, certain applications",
+      "example": "Governs procedural forms for applications made to Central Government concerning managerial personnel."
+    },
+    {
+      "section_number": "202",
+      "title": "Compensation for loss of office of managing or whole-time director or manager",
+      "example": "Compensation for loss of office cannot be paid to a managing director or manager upon winding up due to their negligence."
+    },
+    {
+      "section_number": "203",
+      "title": "Appointment of key managerial personnel",
+      "example": "Every listed company and specified public companies must appoint whole-time KMPs including CEO, MD, CS, and CFO."
+    },
+    {
+      "section_number": "204",
+      "title": "Secretarial audit for bigger companies",
+      "example": "Every listed company and specified public companies must annex a secretarial audit report given by a company secretary in practice."
+    },
+    {
+      "section_number": "205",
+      "title": "Functions of company secretary",
+      "example": "Functions of a company secretary include reporting to the Board on compliance and assisting directors in governance."
+    },
+    {
+      "section_number": "206",
+      "title": "Power to call for information, inspect books and conduct inquiries",
+      "example": "Registrar or Central Government may call for information or inspect books of account of any company by giving written notice."
+    },
+    {
+      "section_number": "207",
+      "title": "Conduct of inspection and inquiry",
+      "example": "Officers conducting inspection have duties to produce records, and company employees must provide full assistance."
+    },
+    {
+      "section_number": "208",
+      "title": "Report on inspection made",
+      "example": "Inspecting officers must submit an inspection report along with recommendations to the Central Government."
+    },
+    {
+      "section_number": "209",
+      "title": "Search and seizure",
+      "example": "Magistrate may authorize search and seizure of books and papers if there is suspicion they may be destroyed or falsified."
+    },
+    {
+      "section_number": "210",
+      "title": "Investigation into affairs of company",
+      "example": "Central Government may order an investigation into company affairs upon report of Registrar or special resolution of company."
+    },
+    {
+      "section_number": "211",
+      "title": "Establishment of Serious Fraud Investigation Office",
+      "example": "Central Government establishes the SFIO to investigate frauds relating to companies."
+    },
+    {
+      "section_number": "212",
+      "title": "Investigation into affairs of company by Serious Fraud Investigation Office",
+      "example": "SFIO investigates corporate fraud cases referred by the Central Government, with powers of arrest in serious offenses."
+    },
+    {
+      "section_number": "213",
+      "title": "Investigation into company's affairs in other cases",
+      "example": "Tribunal may order investigation into company affairs upon application by members or other persons showing oppressive conduct."
+    },
+    {
+      "section_number": "214",
+      "title": "Security for payment of costs and expenses of investigation",
+      "example": "Tribunal may require security for payment of costs from applicants demanding investigation."
+    },
+    {
+      "section_number": "215",
+      "title": "Firm, body corporate or association not to be appointed as inspector",
+      "example": "Only individuals can be appointed as inspecting officers under investigation orders, not corporate firms."
+    },
+    {
+      "section_number": "216",
+      "title": "Investigation of ownership of company",
+      "example": "Central Government may appoint inspectors to investigate true persons who are financially interested in the company."
+    },
+    {
+      "section_number": "217",
+      "title": "Procedure, powers, etc., of inspectors",
+      "example": "Inspectors have powers of a civil court regarding summoning witnesses, examining under oath, and inspecting records."
+    },
+    {
+      "section_number": "218",
+      "title": "Protection of employees during investigation",
+      "example": "Company cannot discharge or penalize any employee who gives evidence during investigation proceedings without Tribunal approval."
+    },
+    {
+      "section_number": "219",
+      "title": "Power of inspector to conduct investigation into affairs of related companies, etc.",
+      "example": "Inspectors investigating a company may extend investigation to related subsidiary, holding, or associate companies."
+    },
+    {
+      "section_number": "220",
+      "title": "Seizure of documents by inspector",
+      "example": "Inspectors can seize and retain relevant books and papers after recording reasons in writing."
+    },
+    {
+      "section_number": "221",
+      "title": "Freezing of assets of company on inquiry and investigation",
+      "example": "Tribunal may order freezing of company assets if removal or transfer of funds is apprehended during investigation."
+    },
+    {
+      "section_number": "222",
+      "title": "Imposition of restrictions upon securities",
+      "example": "Tribunal may impose restrictions on transfer or voting rights of securities if investigation warrants protection."
+    },
+    {
+      "section_number": "223",
+      "title": "Inspector's report",
+      "example": "Inspectors submit interim and final investigation reports to the Central Government for action."
+    },
+    {
+      "section_number": "224",
+      "title": "Actions to be taken in pursuance of inspector's report",
+      "example": "Central Government may initiate prosecution proceedings or winding up petitions based on inspector reports."
+    },
+    {
+      "section_number": "225",
+      "title": "Expenses of investigation",
+      "example": "Expenses of an investigation are defrayed by the Central Government, subject to reimbursement by convicted persons."
+    },
+    {
+      "section_number": "226",
+      "title": "Voluntary winding up of company, etc., not to stop investigation proceedings",
+      "example": "Investigation proceedings continue unaffected even if a company passes resolutions for voluntary winding up."
+    },
+    {
+      "section_number": "227",
+      "title": "Legal advisers and bankers not to disclose certain information",
+      "example": "Legal advisers and bankers are not compelled to disclose confidential client/customer communications except banker names."
+    },
+    {
+      "section_number": "228",
+      "title": "Investigation, etc., of foreign companies",
+      "example": "Provisions of Chapter XIV apply to foreign companies having business activities in India."
+    },
+    {
+      "section_number": "229",
+      "title": "Penalty for furnishing false statement, mutilation, destruction of documents",
+      "example": "Destroying, mutilating, or falsifying documents during investigation is punishable with imprisonment and fines."
+    },
+    {
+      "section_number": "230",
+      "title": "Power to compromise or make arrangements with creditors and members",
+      "example": "Tribunal may order a meeting of creditors or members to consider a compromise or arrangement scheme upon application."
+    },
+    {
+      "section_number": "231",
+      "title": "Power to Tribunal to enforce compromise or arrangement",
+      "example": "Tribunal supervises and enforces the execution of compromises or arrangements approved under section 230."
+    },
+    {
+      "section_number": "232",
+      "title": "Merger and amalgamation of companies",
+      "example": "Tribunal may sanction schemes for merger, amalgamation, or reconstruction of companies after calling meetings."
+    },
+    {
+      "section_number": "233",
+      "title": "Merger or amalgamation of certain companies",
+      "example": "Fast-track mergers between small companies, holding and wholly-owned subsidiaries, without Tribunal intervention."
+    },
+    {
+      "section_number": "234",
+      "title": "Merger or amalgamation of company with foreign company",
+      "example": "A foreign company may merge with an Indian company or vice versa with prior approval of the Reserve Bank of India."
+    },
+    {
+      "section_number": "235",
+      "title": "Power to acquire shares of shareholders dissenting from scheme or contract approved by majority",
+      "example": "Majority shareholders holding 90% shares can acquire shares of dissenting minority shareholders under approved schemes."
+    },
+    {
+      "section_number": "236",
+      "title": "Purchase of minority shareholding",
+      "example": "Acquirer holding 90% or more shares can notify minority shareholders to buy out their remaining shares at a fair price."
+    },
+    {
+      "section_number": "237",
+      "title": "Power of Central Government to provide for amalgamation of companies in public interest",
+      "example": "Central Government may order amalgamation of two or more companies in public interest by notification."
+    },
+    {
+      "section_number": "238",
+      "title": "Registration of offer of schemes involving transfer of shares",
+      "example": "Circulars or offer documents relating to share transfer schemes must be registered with the Registrar."
+    },
+    {
+      "section_number": "239",
+      "title": "Preservation of books and papers of amalgamated companies",
+      "example": "Books and papers of a company amalgamated cannot be disposed of without prior approval of Central Government."
+    },
+    {
+      "section_number": "240",
+      "title": "Liability of officers in respect of offences committed prior to merger, amalgamation, etc.",
+      "example": "Liability of officers for offenses committed prior to merger continues despite amalgamation schemes."
+    },
+    {
+      "section_number": "241",
+      "title": "Application to Tribunal for relief in cases of oppression, etc.",
+      "example": "Members complaining of oppressive management or mismanagement may apply to the Tribunal for relief."
+    },
+    {
+      "section_number": "242",
+      "title": "Powers of Tribunal",
+      "example": "Tribunal may pass orders regulating company conduct, purchase of shares, or termination of agreements to end oppression."
+    },
+    {
+      "section_number": "243",
+      "title": "Consequence of termination or modification of certain agreements",
+      "example": "Terminated agreements under Tribunal orders cannot be compensated by damages without leave."
+    },
+    {
+      "section_number": "244",
+      "title": "Right to apply under section 241",
+      "example": "Specifies minimum threshold of members (100 members or 10% shareholding) required to file oppression/mismanagement petitions."
+    },
+    {
+      "section_number": "245",
+      "title": "Class action",
+      "example": "Members or depositors can file a class action suit before the Tribunal against the company for fraudulent or oppressive acts."
+    },
+    {
+      "section_number": "246",
+      "title": "Application of certain provisions to proceedings under section 241 or section 245",
+      "example": "Provisions relating to investigations and inquiries apply mutatis mutandis to class action proceedings."
+    },
+    {
+      "section_number": "247",
+      "title": "Valuation by registered valuers",
+      "example": "Valuations of stocks, shares, assets, or net worth required under the Act must be performed by registered valuers."
+    },
+    {
+      "section_number": "248",
+      "title": "Power of Registrar to remove name of company from register of companies",
+      "example": "Registrar may strike off company names that fail to commence business within one year or remain inactive for two financial years."
+    },
+    {
+      "section_number": "249",
+      "title": "Restrictions on making application under section 248 in certain situations",
+      "example": "Restrictions apply prohibiting strike-off applications during pending amalgamations or change of names."
+    },
+    {
+      "section_number": "250",
+      "title": "Effect of company notified as dissolved",
+      "example": "A company notified as dissolved under section 248 ceases to operate, except for realization of debts and discharge of liabilities."
+    },
+    {
+      "section_number": "251",
+      "title": "Fraudulent application for removal of name",
+      "example": "Applications made with intent to evade debt or deceive creditors are punishable under fraud provisions."
+    },
+    {
+      "section_number": "252",
+      "title": "Appeal to Tribunal",
+      "example": "Any person aggrieved by strike-off orders may file an appeal before the Tribunal within 3 years of publication."
+    },
+    {
+      "section_number": "253",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding sick companies determination."
+    },
+    {
+      "section_number": "254",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding reference to Tribunal."
+    },
+    {
+      "section_number": "255",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding inquiry into working of sick companies."
+    },
+    {
+      "section_number": "256",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding powers of Tribunal to make orders."
+    },
+    {
+      "section_number": "257",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding appointment of interim administrator."
+    },
+    {
+      "section_number": "258",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding committee of creditors."
+    },
+    {
+      "section_number": "259",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding scheme of revival and rehabilitation."
+    },
+    {
+      "section_number": "260",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding sanction of scheme."
+    },
+    {
+      "section_number": "261",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding scheme implementation."
+    },
+    {
+      "section_number": "262",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding winding up of sick company."
+    },
+    {
+      "section_number": "263",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding fee and charges."
+    },
+    {
+      "section_number": "264",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding bar of other jurisdiction."
+    },
+    {
+      "section_number": "265",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding rehabilitation and insolvency fund."
+    },
+    {
+      "section_number": "266",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding transitional provisions."
+    },
+    {
+      "section_number": "267",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "268",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "269",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "270",
+      "title": "Winding up by Tribunal",
+      "example": "Winding up of a company can be ordered by the Tribunal under specific statutory circumstances."
+    },
+    {
+      "section_number": "271",
+      "title": "Circumstances in which company may be wound up by Tribunal",
+      "example": "Company may be wound up by Tribunal if it passes special resolution, acts against sovereignty of India, or defaults in filing returns for 5 years."
+    },
+    {
+      "section_number": "272",
+      "title": "Petition for winding up",
+      "example": "Winding up petition may be presented by the company, contributors, creditors, or Registrar."
+    },
+    {
+      "section_number": "273",
+      "title": "Powers of Tribunal",
+      "example": "Tribunal may dismiss winding up petitions, make interim orders, or appoint provisional liquidators."
+    },
+    {
+      "section_number": "274",
+      "title": "Directions for filing statement of affairs",
+      "example": "Company must submit a verified statement of affairs within 21 days of winding up order."
+    },
+    {
+      "section_number": "275",
+      "title": "Company Liquidators and their appointments",
+      "example": "Tribunal appoints Company Liquidators from a panel maintained by the Central Government."
+    },
+    {
+      "section_number": "276",
+      "title": "Removal and replacement of liquidator",
+      "example": "Tribunal may remove a company liquidator for misconduct, fraud, or inability to act."
+    },
+    {
+      "section_number": "277",
+      "title": "Intimation to Company Liquidator, provisional liquidator and Registrar",
+      "example": "Tribunal intimates the liquidator and Registrar within 7 days of winding up order."
+    },
+    {
+      "section_number": "278",
+      "title": "Effect of winding up order",
+      "example": "Winding up order operates in favor of all creditors and contributories of the company."
+    },
+    {
+      "section_number": "279",
+      "title": "Stay of suits, etc., on winding up order",
+      "example": "No suit or legal proceedings can be commenced against the company after winding up order except with Tribunal leave."
+    },
+    {
+      "section_number": "280",
+      "title": "Jurisdiction of Tribunal",
+      "example": "Tribunal has jurisdiction to entertain or dispose of any suit or proceeding by or against the company."
+    },
+    {
+      "section_number": "281",
+      "title": "Submission of report by Company Liquidator",
+      "example": "Company Liquidator must submit a report within 60 days detailing assets, liabilities, and cash flow."
+    },
+    {
+      "section_number": "282",
+      "title": "Directions of Tribunal on report of Company Liquidator",
+      "example": "Tribunal issues directions regarding sale of assets or fixing time limits for liquidator actions."
+    },
+    {
+      "section_number": "283",
+      "title": "Custody of company's properties",
+      "example": "Company Liquidator takes into custody all property, effects, and actionable claims to which the company is entitled."
+    },
+    {
+      "section_number": "284",
+      "title": "Promoters, directors, etc., to cooperate with Company Liquidator",
+      "example": "Promoters, directors, and officers must extend full cooperation to the liquidator in winding up."
+    },
+    {
+      "section_number": "285",
+      "title": "Settlement of list of contributories and application of assets",
+      "example": "Liquidator settles the list of contributories and causes company assets to be applied for discharge of liabilities."
+    },
+    {
+      "section_number": "286",
+      "title": "Obligations of directors and managers",
+      "example": "Directors and managers must attend meetings and provide records as required by the liquidator."
+    },
+    {
+      "section_number": "287",
+      "title": "Advisory Committee",
+      "example": "Tribunal may direct constitution of an advisory committee of creditors/contributories to assist liquidator."
+    },
+    {
+      "section_number": "288",
+      "title": "Submission of periodical reports to Tribunal",
+      "example": "Liquidator files progress reports at least once every month to the Tribunal."
+    },
+    {
+      "section_number": "289",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "290",
+      "title": "Powers and duties of Company Liquidator",
+      "example": "Liquidator has powers to carry on business, sell property, draw bills, and institute suits with Tribunal sanction."
+    },
+    {
+      "section_number": "291",
+      "title": "Provision for professional assistance to Company Liquidator",
+      "example": "Liquidator may appoint professionals like chartered accountants or advocates to assist in winding up."
+    },
+    {
+      "section_number": "292",
+      "title": "Exercise and control of Company Liquidator's powers",
+      "example": "Liquidator exercises powers subject to overall control and directions of the Tribunal."
+    },
+    {
+      "section_number": "293",
+      "title": "Books to be kept by Company Liquidator",
+      "example": "Liquidator must keep proper books of accounts and records of all receipts and payments."
+    },
+    {
+      "section_number": "294",
+      "title": "Audit of Company Liquidator's accounts",
+      "example": "Liquidator's accounts must be audited quarterly by chartered accountants appointed by the Tribunal."
+    },
+    {
+      "section_number": "295",
+      "title": "Payment of debts by contributory and extent of set-off",
+      "example": "Tribunal may order any contributory to pay money due to the company, permitting set-offs."
+    },
+    {
+      "section_number": "296",
+      "title": "Power of Tribunal to make calls",
+      "example": "Tribunal may make calls on contributories for payment of debts and liabilities."
+    },
+    {
+      "section_number": "297",
+      "title": "Adjustment of rights of contributories",
+      "example": "Tribunal adjusts rights of contributories among themselves and distributes surplus assets."
+    },
+    {
+      "section_number": "298",
+      "title": "Power to order costs",
+      "example": "Tribunal may order costs and expenses incurred in winding up to be paid out of company assets."
+    },
+    {
+      "section_number": "299",
+      "title": "Power to summon persons suspected of having property of company, etc.",
+      "example": "Tribunal may summon officers or persons suspected of having company property in possession."
+    },
+    {
+      "section_number": "300",
+      "title": "Power to order examination of promoters, directors, etc.",
+      "example": "Tribunal may order public examination of promoters, directors, or officers suspected of misfeasance."
+    },
+    {
+      "section_number": "301",
+      "title": "Arrest of person trying to leave India or abscond",
+      "example": "Tribunal may order arrest of any person trying to abscond or leave India to avoid winding up examination."
+    },
+    {
+      "section_number": "302",
+      "title": "Dissolution of company by Tribunal",
+      "example": "When affairs of the company are fully wound up, Tribunal makes an order that the company stands dissolved."
+    },
+    {
+      "section_number": "303",
+      "title": "Appeals from orders made before commencement of Act",
+      "example": "Appeals against orders made before commencement of Act follow previous procedures."
+    },
+    {
+      "section_number": "304",
+      "title": "[Omitted.]",
+      "example": "Section omitted regarding voluntary winding up circumstances."
+    },
+    {
+      "section_number": "305",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "306",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "307",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "308",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "309",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "310",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "311",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "312",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "313",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "314",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "315",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "316",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "317",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "318",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "319",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "320",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "321",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "322",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "323",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "324",
+      "title": "Debts of all descriptions to be admitted to proof",
+      "example": "All claims against the company, present or future, are admissible to proof in winding up."
+    },
+    {
+      "section_number": "325",
+      "title": "[Omitted.]",
+      "example": "Section omitted."
+    },
+    {
+      "section_number": "326",
+      "title": "Overriding preferential payments",
+      "example": "Workmen's dues and debts due to secured creditors rank over other debts during winding up."
+    },
+    {
+      "section_number": "327",
+      "title": "Preferential payments",
+      "example": "Government dues, wages, and employee provident fund contributions are paid preferentially."
+    },
+    {
+      "section_number": "328",
+      "title": "Fraudulent preference",
+      "example": "Transfers of property made within 6 months before winding up with intent to prefer certain creditors are deemed invalid."
+    },
+    {
+      "section_number": "329",
+      "title": "Transfers not in good faith to be void",
+      "example": "Transfers of company property made fraudulently before winding up are void."
+    },
+    {
+      "section_number": "330",
+      "title": "Certain transfers to be void",
+      "example": "Transfer of company property to a trustee for benefit of all creditors is void."
+    },
+    {
+      "section_number": "331",
+      "title": "Liabilities and rights of certain persons fraudulently preferred",
+      "example": "Persons fraudulently preferred are subject to same liabilities as if they were corporate creditors."
+    },
+    {
+      "section_number": "332",
+      "title": "Effect of floating charge",
+      "example": "A floating charge created within 12 months of winding up is invalid except for cash paid."
+    },
+    {
+      "section_number": "333",
+      "title": "Disclaimer of onerous property",
+      "example": "Liquidator may disclaim land, unprofitable contracts, or unsellable property within 12 months."
+    },
+    {
+      "section_number": "334",
+      "title": "Transfers, etc., after commencement of winding up to be void",
+      "example": "Any disposition of company property after commencement of winding up is void unless ordered otherwise."
+    },
+    {
+      "section_number": "335",
+      "title": "Certain attachments, executions, etc., in winding up by Tribunal to be void",
+      "example": "Any attachment or execution against company assets put in force after winding up is void."
+    },
+    {
+      "section_number": "336",
+      "title": "Offences by officers of companies in liquidation",
+      "example": "Officers failing to disclose company property or concealing books during winding up commit punishable offenses."
+    },
+    {
+      "section_number": "337",
+      "title": "Penalty for frauds by officers",
+      "example": "Officers committing frauds or deceit against creditors before or during winding up face imprisonment."
+    },
+    {
+      "section_number": "338",
+      "title": "Liability where proper accounts not kept",
+      "example": "Directors failing to keep proper books of account for 2 years before winding up are punishable."
+    },
+    {
+      "section_number": "339",
+      "title": "Liability for fraudulent conduct of business",
+      "example": "Persons knowingly carrying on business with intent to defraud creditors are personally liable without limitation."
+    },
+    {
+      "section_number": "340",
+      "title": "Power of Tribunal to assess damages against delinquent directors, etc.",
+      "example": "Tribunal may compel delinquent directors to repay or restore money or property misapplied."
+    },
+    {
+      "section_number": "341",
+      "title": "Liability under sections 339 and 340 to extend to partners or directors in firms or companies",
+      "example": "Liabilities for fraudulent conduct extend to partner firms or corporate bodies acting as directors."
+    },
+    {
+      "section_number": "342",
+      "title": "Prosecution of delinquent officers and members of company",
+      "example": "Liquidator may report delinquent officers to the Tribunal for criminal prosecution."
+    },
+    {
+      "section_number": "343",
+      "title": "Company Liquidator to exercise certain powers subject to sanction",
+      "example": "Liquidator requires Tribunal sanction to compromise debts or institute legal suits."
+    },
+    {
+      "section_number": "344",
+      "title": "Statement that company is in liquidation",
+      "example": "Every invoice, order, or business letter must state clearly that the company is in liquidation."
+    },
+    {
+      "section_number": "345",
+      "title": "Books and papers of company to be evidence",
+      "example": "All books and papers of the company are prima facie evidence of truth in winding up proceedings."
+    },
+    {
+      "section_number": "346",
+      "title": "Inspection of books and papers by creditors and contributories",
+      "example": "Creditors and contributories may inspect books and papers of the company under Tribunal orders."
+    },
+    {
+      "section_number": "347",
+      "title": "Disposal of books and papers of company",
+      "example": "Books and papers of a dissolved company can be disposed of after 5 years with Central Government approval."
+    },
+    {
+      "section_number": "348",
+      "title": "Information as to pending liquidations",
+      "example": "If liquidation continues for more than a year, liquidator files statements detailing pending status."
+    },
+    {
+      "section_number": "349",
+      "title": "Official Liquidator to make payments into public account of India",
+      "example": "Official Liquidator deposits all money received into the public account of India."
+    },
+    {
+      "section_number": "350",
+      "title": "Company Liquidator to deposit monies into scheduled bank",
+      "example": "Liquidator deposits funds into scheduled banks as approved by Tribunal."
+    },
+    {
+      "section_number": "351",
+      "title": "Liquidator not to deposit monies into private banking account",
+      "example": "Liquidator cannot pay company funds into private personal bank accounts."
+    },
+    {
+      "section_number": "352",
+      "title": "Company Liquidation Dividend and Undistributed Assets Account",
+      "example": "Unpaid dividends or undistributed assets must be transferred to a special account in the Reserve Bank of India."
+    },
+    {
+      "section_number": "353",
+      "title": "Liquidator to make returns, etc.",
+      "example": "Liquidator submits periodic returns and statements to Registrar and Central Government."
+    },
+    {
+      "section_number": "354",
+      "title": "Meetings to ascertain wishes of creditors or contributories",
+      "example": "Tribunal may direct meetings of creditors or contributories to ascertain their wishes during winding up."
+    },
+    {
+      "section_number": "355",
+      "title": "Court, tribunal or person, etc., before whom affidavit may be sworn",
+      "example": "Affidavits required under winding up can be sworn before judicial officers, courts, or designated authorities."
+    },
+    {
+      "section_number": "356",
+      "title": "Power of Tribunal to declare dissolution of company void",
+      "example": "Tribunal may declare dissolution of a company void within 2 years of dissolution order upon application."
+    },
+    {
+      "section_number": "357",
+      "title": "Commencement of winding up by Tribunal",
+      "example": "Winding up by Tribunal is deemed to commence from the date of presentation of the petition."
+    },
+    {
+      "section_number": "358",
+      "title": "Exclusion of certain time in computing period of limitation",
+      "example": "Time spent in winding up proceedings is excluded when computing limitation periods."
+    },
+    {
+      "section_number": "359",
+      "title": "Appointment of Official Liquidator",
+      "example": "Central Government appoints Official Liquidators attached to High Courts."
+    },
+    {
+      "section_number": "360",
+      "title": "Powers and functions of Official Liquidator",
+      "example": "Official Liquidators exercise powers to conduct summary liquidations and realize assets."
+    },
+    {
+      "section_number": "361",
+      "title": "Summary procedure for liquidation",
+      "example": "Summary liquidation procedure applies to small companies or companies with assets below prescribed thresholds."
+    },
+    {
+      "section_number": "362",
+      "title": "Sale of assets and recovery of debts due to company",
+      "example": "Official Liquidator sells assets and recovers debts expeditiously under summary procedure."
+    },
+    {
+      "section_number": "363",
+      "title": "Settlement of claims of creditors by Official Liquidator",
+      "example": "Liquidator invites and settles claims of creditors within stipulated timeframes."
+    },
+    {
+      "section_number": "364",
+      "title": "Appeal by creditor",
+      "example": "Creditors aggrieved by liquidator claim settlements may appeal to the Tribunal."
+    },
+    {
+      "section_number": "365",
+      "title": "Order of dissolution of company",
+      "example": "Official Liquidator applies to Tribunal for dissolution order upon completion of summary liquidation."
+    },
+    {
+      "section_number": "366",
+      "title": "Companies capable of being registered",
+      "example": "Existing partnership firms, societies, or cooperative bodies with 7 or more members can register as companies under this Act."
+    },
+    {
+      "section_number": "367",
+      "title": "Certificate of registration of existing companies",
+      "example": "Registrar issues certificate of registration upon compliance by existing unincorporated entities."
+    },
+    {
+      "section_number": "368",
+      "title": "Vesting of property on registration",
+      "example": "All property belonging to an entity vests in the newly registered company upon registration."
+    },
+    {
+      "section_number": "369",
+      "title": "Saving of existing liabilities",
+      "example": "Registration under this Part does not affect prior debts, liabilities, or contracts incurred by the entity."
+    },
+    {
+      "section_number": "370",
+      "title": "Continuation of pending legal proceedings",
+      "example": "All pending legal suits and proceedings by or against the entity may be continued after registration."
+    },
+    {
+      "section_number": "371",
+      "title": "Effect of registration under this Part",
+      "example": "Registered entities acquire status of incorporated public or private companies under the Act."
+    },
+    {
+      "section_number": "372",
+      "title": "Power of Court to stay or restrain proceedings",
+      "example": "Courts may stay legal proceedings against registering companies upon application."
+    },
+    {
+      "section_number": "373",
+      "title": "Suits stayed on winding up order",
+      "example": "Suits against unregistered companies are stayed upon winding up orders."
+    },
+    {
+      "section_number": "374",
+      "title": "Obligations of companies registering under this Part",
+      "example": "Registering entities must deliver list of members, shares, and consent affidavits to the Registrar."
+    },
+    {
+      "section_number": "375",
+      "title": "Winding up of unregistered companies",
+      "example": "Any unregistered company or partnership having more than 7 members can be wound up under the Act."
+    },
+    {
+      "section_number": "376",
+      "title": "Power to wind up foreign companies although dissolved",
+      "example": "Foreign companies carrying on business in India can be wound up even if dissolved in their home country."
+    },
+    {
+      "section_number": "377",
+      "title": "Provisions of Chapter cumulative",
+      "example": "Provisions for winding up unregistered companies are in addition to other statutory provisions."
+    },
+    {
+      "section_number": "378",
+      "title": "Saving and construction of enactments conferring power to wind up partnership firm, association or company, etc., in certain cases",
+      "example": "Saves previous statutory provisions empowering winding up of partnership associations."
+    },
+    {
+      "section_number": "378A",
+      "title": "Definitions (Producer Companies)",
+      "example": "Defines producer, producer company, and active member terms for agricultural cooperative enterprises."
+    },
+    {
+      "section_number": "378B",
+      "title": "Objects of producer company",
+      "example": "Objects relate to production, harvesting, processing, and marketing of produce of members."
+    },
+    {
+      "section_number": "378C",
+      "title": "Formation of Producer Company and its registration",
+      "example": "Ten or more producers can form a producer company with registration."
+    },
+    {
+      "section_number": "378D",
+      "title": "Membership and voting rights of Members of Producer Company",
+      "example": "Members have voting rights based on active participation rather than capital shareholding."
+    },
+    {
+      "section_number": "378E",
+      "title": "Benefits to Members",
+      "example": "Producer companies distribute patronage bonus and financial benefits to members."
+    },
+    {
+      "section_number": "378F",
+      "title": "Memorandum of Producer Company",
+      "example": "Memorandum details producer objects, liability, and authorized capital."
+    },
+    {
+      "section_number": "378G",
+      "title": "Articles of association",
+      "example": "Articles detail internal management, quorum, and voting regulations for producer companies."
+    },
+    {
+      "section_number": "378H",
+      "title": "Amendment of memorandum",
+      "example": "Producer company may alter memorandum by special resolution."
+    },
+    {
+      "section_number": "378I",
+      "title": "Amendment of articles",
+      "example": "Articles can be amended by special resolution passed by members."
+    },
+    {
+      "section_number": "378J",
+      "title": "Option to inter-State co-operative societies to become Producer Companies",
+      "example": "Inter-state cooperative societies can transform into producer companies."
+    },
+    {
+      "section_number": "378K",
+      "title": "Effect of incorporation of Producer Company",
+      "example": "Incorporation gives producer companies corporate body status with perpetual succession."
+    },
+    {
+      "section_number": "378L",
+      "title": "Vesting of undertaking in Producer Company",
+      "example": "Cooperative undertakings vest seamlessly into newly formed producer companies."
+    },
+    {
+      "section_number": "378M",
+      "title": "Concession, etc., to be deemed to have been granted to Producer Company",
+      "example": "Concessions previously given to cooperative societies apply to producer companies."
+    },
+    {
+      "section_number": "378N",
+      "title": "Provisions in respect of officers and other employees of inter-State co-operative society",
+      "example": "Employees of cooperative societies continue service under producer companies on same terms."
+    },
+    {
+      "section_number": "378O",
+      "title": "Number of directors (Producer Company)",
+      "example": "Producer company must have not less than 5 and not more than 15 directors."
+    },
+    {
+      "section_number": "378P",
+      "title": "Appointment of directors",
+      "example": "First directors are appointed by subscribers, subsequent directors elected at annual general meetings."
+    },
+    {
+      "section_number": "378Q",
+      "title": "Vacation of office by directors",
+      "example": "Director office vacates upon disqualification or non-attendance of board meetings."
+    },
+    {
+      "section_number": "378R",
+      "title": "Powers and functions of Board",
+      "example": "Board manages producer company affairs and formulates operational policies."
+    },
+    {
+      "section_number": "378S",
+      "title": "Matters to be transacted at general meeting",
+      "example": "Adoption of balance sheets, approval of budgets, and declaration of patronage bonus."
+    },
+    {
+      "section_number": "378T",
+      "title": "Liability of directors",
+      "example": "Directors are liable for actions authorized in breach of producer company guidelines."
+    },
+    {
+      "section_number": "378U",
+      "title": "Committee of directors",
+      "example": "Board may constitute executive committees of directors for specific functions."
+    },
+    {
+      "section_number": "378V",
+      "title": "Meetings of Board and quorum",
+      "example": "Board must meet at least once every three months with specified quorum."
+    },
+    {
+      "section_number": "378W",
+      "title": "Chief Executive and his functions",
+      "example": "Producer company must have a full-time Chief Executive appointed by the Board."
+    },
+    {
+      "section_number": "378X",
+      "title": "Secretary of Producer Company",
+      "example": "Companies with turnover exceeding threshold must appoint a company secretary."
+    },
+    {
+      "section_number": "378Y",
+      "title": "Quorum for general meetings",
+      "example": "Quorum for general meetings is specified in articles or minimum member percentages."
+    },
+    {
+      "section_number": "378Z",
+      "title": "Voting rights",
+      "example": "Every active member has one vote regardless of shareholding quantity."
+    },
+    {
+      "section_number": "378ZA",
+      "title": "Annual general meetings",
+      "example": "Producer company must hold annual general meetings within 6 months of financial year end."
+    },
+    {
+      "section_number": "378ZB",
+      "title": "Share capital",
+      "example": "Capital of producer company consists of equity shares held only by active producers."
+    },
+    {
+      "section_number": "378ZC",
+      "title": "Special user rights",
+      "example": "Active members enjoy special user rights regarding processing and marketing facilities."
+    },
+    {
+      "section_number": "378ZD",
+      "title": "Transferability of shares and attendant rights",
+      "example": "Shares of producer companies are generally non-transferable except to other active producers with board approval."
+    },
+    {
+      "section_number": "378ZE",
+      "title": "Books of account (Producer Company)",
+      "example": "Must keep proper books of account regarding produce transactions and member contributions."
+    },
+    {
+      "section_number": "378ZF",
+      "title": "Internal audit",
+      "example": "Producer company must carry out internal audit of accounts by chartered accountants."
+    },
+    {
+      "section_number": "378ZG",
+      "title": "Duties of auditor under this Chapter",
+      "example": "Auditor certifies financial statements and adherence to producer guidelines."
+    },
+    {
+      "section_number": "378ZH",
+      "title": "Donation or subscription by Producer Company",
+      "example": "May contribute to general welfare funds up to specified limits of net profits."
+    },
+    {
+      "section_number": "378ZI",
+      "title": "General and other reserves",
+      "example": "Must maintain general reserves and create specific contingency funds out of profits."
+    },
+    {
+      "section_number": "378ZJ",
+      "title": "Issue of bonus shares",
+      "example": "May issue bonus shares to members in proportion to produce marketed."
+    },
+    {
+      "section_number": "378ZK",
+      "title": "Loan, etc., to Members",
+      "example": "May provide financial credit or advance payments to active producer members against produce."
+    },
+    {
+      "section_number": "378ZL",
+      "title": "Investment in other companies, formation of subsidiaries, etc.",
+      "example": "May invest in other cooperative institutions or form specialized subsidiary ventures."
+    },
+    {
+      "section_number": "378ZM",
+      "title": "Penalty for contravention",
+      "example": "Contraventions of producer company provisions attract monetary fines."
+    },
+    {
+      "section_number": "378ZN",
+      "title": "Amalgamation, merger or division, etc., to form new Producer Companies",
+      "example": "Producer companies may merge, divide, or amalgamate to form larger cooperative entities."
+    },
+    {
+      "section_number": "378ZO",
+      "title": "Disputes",
+      "example": "Disputes among members or directors are referred to conciliation or arbitration."
+    },
+    {
+      "section_number": "378ZP",
+      "title": "Strike off name of Producer Company",
+      "example": "Registrar may strike off inactive producer companies."
+    },
+    {
+      "section_number": "378ZQ",
+      "title": "Provisions of this Chapter to override other laws",
+      "example": "Producer company chapter provisions override other conflicting company laws."
+    },
+    {
+      "section_number": "378ZR",
+      "title": "Application of provisions relating to private companies",
+      "example": "Private company provisions apply mutatis mutandis to producer companies unless specified otherwise."
+    },
+    {
+      "section_number": "378ZS",
+      "title": "Re-conversion of Producer Company to inter-State co-operative society",
+      "example": "Producer company may re-convert into an inter-state cooperative society by special resolution."
+    },
+    {
+      "section_number": "378ZT",
+      "title": "Power to modify Act in its application to Producer Companies",
+      "example": "Central Government may modify Act application to producer companies by notification."
+    },
+    {
+      "section_number": "378ZU",
+      "title": "Power to make rules",
+      "example": "Central Government may make rules for carrying out producer company provisions."
+    },
+    {
+      "section_number": "379",
+      "title": "Application of Act to foreign companies",
+      "example": "Provisions of Chapter XXII apply to all foreign companies having a place of business in India."
+    },
+    {
+      "section_number": "380",
+      "title": "Documents, etc., to be delivered to Registrar by foreign companies",
+      "example": "Foreign companies must deliver charter, director list, and address details to the Registrar within 30 days of establishment."
+    },
+    {
+      "section_number": "381",
+      "title": "Accounts of foreign company",
+      "example": "Foreign companies must prepare and file balance sheets and financial statements with the Registrar annually."
+    },
+    {
+      "section_number": "382",
+      "title": "Display of name, etc., of foreign company",
+      "example": "Foreign companies must exhibit their name and country of incorporation outside every place of business in India."
+    },
+    {
+      "section_number": "383",
+      "title": "Service on foreign company",
+      "example": "Any process, notice, or document is deemed served on a foreign company if addressed to its authorized Indian representative."
+    },
+    {
+      "section_number": "384",
+      "title": "Debentures, annual return, registration of charges, books of account and their inspection",
+      "example": "Provisions relating to debentures, annual returns, and charges apply to foreign companies carrying on business in India."
+    },
+    {
+      "section_number": "385",
+      "title": "Fee for registration of documents",
+      "example": "Foreign companies must pay prescribed registration fees for filing statutory documents."
+    },
+    {
+      "section_number": "386",
+      "title": "Interpretation",
+      "example": "Defines expressions like 'certified copy', 'director', and 'place of business' in relation to foreign companies."
+    },
+    {
+      "section_number": "387",
+      "title": "Dating of prospectus and particulars to be contained therein",
+      "example": "Prospectuses issued by foreign companies must be dated, signed, and contain statutory particulars."
+    },
+    {
+      "section_number": "388",
+      "title": "Provisions as to expert's consent and allotment",
+      "example": "Expert consent requirements apply to prospectuses of foreign companies."
+    },
+    {
+      "section_number": "389",
+      "title": "Registration of prospectus",
+      "example": "No prospectus can be issued by a foreign company unless registered with the Registrar."
+    },
+    {
+      "section_number": "390",
+      "title": "Offer of Indian Depository Receipts",
+      "example": "Foreign companies may issue Indian Depository Receipts (IDRs) subject to SEBI regulations."
+    },
+    {
+      "section_number": "391",
+      "title": "Application of sections 34 to 36 and Chapter XX",
+      "example": "Criminal/civil liability and winding up provisions apply to foreign company prospectuses and Indian operations."
+    },
+    {
+      "section_number": "392",
+      "title": "Punishment for contravention",
+      "example": "Failure by a foreign company to comply with Chapter XXII provisions attracts heavy fines and penalties."
+    },
+    {
+      "section_number": "393",
+      "title": "Company's failure to comply with provisions of this Chapter not to affect validity of contracts, etc.",
+      "example": "Non-compliance by a foreign company does not affect the enforceability of contracts entered into by it."
+    },
+    {
+      "section_number": "394",
+      "title": "Annual reports on Government companies",
+      "example": "Annual reports on Government companies must be prepared and laid before both Houses of Parliament."
+    },
+    {
+      "section_number": "395",
+      "title": "Annual reports where one or more State Governments are members of companies",
+      "example": "Annual reports where State Governments are members must be laid before the State Legislature."
+    },
+    {
+      "section_number": "396",
+      "title": "Registration offices",
+      "example": "Central Government establishes registration offices across India for company registrations."
+    },
+    {
+      "section_number": "397",
+      "title": "Admissibility of certain documents as evidence",
+      "example": "Certified copies of documents kept by the Registrar are admissible as evidence in legal proceedings."
+    },
+    {
+      "section_number": "398",
+      "title": "Provisions relating to filing of applications, documents, inspection, etc., in electronic form",
+      "example": "All applications, documents, and returns can be filed electronically through MCA portals."
+    },
+    {
+      "section_number": "399",
+      "title": "Inspection, production and evidence of documents kept by Registrar",
+      "example": "Any person can inspect or obtain certified copies of documents kept by the Registrar upon payment of fees."
+    },
+    {
+      "section_number": "400",
+      "title": "Electronic form to be exclusive, alternative or in addition to physical form",
+      "example": "Central Government may mandate electronic filing or maintenance as alternative or exclusive mode."
+    },
+    {
+      "section_number": "401",
+      "title": "Provision of value added services through electronic form",
+      "example": "Central Government may provide value-added electronic services through authorized agencies."
+    },
+    {
+      "section_number": "402",
+      "title": "Application of provisions of Information Technology Act, 2000",
+      "example": "Information Technology Act provisions apply to electronic filings and digital signatures under the Companies Act."
+    },
+    {
+      "section_number": "403",
+      "title": "Fee for filing, etc.",
+      "example": "Documents must be filed within stipulated timeframes with standard or additional late fees."
+    },
+    {
+      "section_number": "404",
+      "title": "Fees, etc., to be credited into public account",
+      "example": "All fees, charges, and penalties collected by Registrars are credited to the Public Account of India."
+    },
+    {
+      "section_number": "405",
+      "title": "Power of Central Government to direct companies to furnish information or statistics",
+      "example": "Central Government may direct companies to furnish statistical information regarding their activities."
+    },
+    {
+      "section_number": "406",
+      "title": "Provision relating to Nidhis and its application, etc.",
+      "example": "Central Government may direct that Nidhi companies shall comply with modified statutory provisions."
+    },
+    {
+      "section_number": "407",
+      "title": "Definitions (NCLT / NCLAT)",
+      "example": "Defines terms like Chairperson, Judicial Member, and Technical Member for Tribunals."
+    },
+    {
+      "section_number": "408",
+      "title": "Constitution of National Company Law Tribunal",
+      "example": "Central Government constitutes the National Company Law Tribunal (NCLT) consisting of a President and judicial/technical members."
+    },
+    {
+      "section_number": "409",
+      "title": "Qualification of President and Members of Tribunal",
+      "example": "Presidents must be judges of High Courts, and judicial members must have practiced as advocates for 10 years."
+    },
+    {
+      "section_number": "410",
+      "title": "Constitution of Appellate Tribunal",
+      "example": "Central Government constitutes the NCLAT to hear appeals against NCLT orders."
+    },
+    {
+      "section_number": "411",
+      "title": "Qualifications of Chairperson and members of Appellate Tribunal",
+      "example": "Chairperson of NCLAT must be a judge of the Supreme Court or Chief Justice of a High Court."
+    },
+    {
+      "section_number": "412",
+      "title": "Selection of Members of Tribunal and Appellate Tribunal",
+      "example": "President and members of Tribunal are selected by a Selection Committee chaired by the Chief Justice of India."
+    },
+    {
+      "section_number": "413",
+      "title": "Term of office of President, Chairperson and other Members",
+      "example": "Members hold office for a term of 5 years, eligible for re-appointment up to age limits."
+    },
+    {
+      "section_number": "414",
+      "title": "Salary, allowances and other terms and conditions of service of Members",
+      "example": "Salaries, allowances, and service terms of tribunal members are prescribed by Central Government rules."
+    },
+    {
+      "section_number": "415",
+      "title": "Acting President and Chairperson of Tribunal or Appellate Tribunal",
+      "example": "Central Government appoints senior members to act as President or Chairperson during vacancies."
+    },
+    {
+      "section_number": "416",
+      "title": "Resignation of Members",
+      "example": "Members may resign by giving three months' notice in writing to the Central Government."
+    },
+    {
+      "section_number": "417",
+      "title": "Removal of Members",
+      "example": "Central Government may remove members from office on grounds of misbehavior or incapacity after inquiry."
+    },
+    {
+      "section_number": "417A",
+      "title": "Qualifications, terms and conditions of service of Chairperson and Member",
+      "example": "Specifies qualifications, tenure, and removal norms for Tribunal members."
+    },
+    {
+      "section_number": "418",
+      "title": "Staff of Tribunal and Appellate Tribunal",
+      "example": "Central Government provides officers and supporting staff for smooth functioning of Tribunals."
+    },
+    {
+      "section_number": "419",
+      "title": "Benches of Tribunal",
+      "example": "Tribunal functions through various regional benches consisting of judicial and technical members."
+    },
+    {
+      "section_number": "420",
+      "title": "Orders of Tribunal",
+      "example": "Tribunal passes reasoned orders after giving parties an opportunity of being heard, with amendment powers for mistakes."
+    },
+    {
+      "section_number": "421",
+      "title": "Appeal from orders of Tribunal",
+      "example": "Any person aggrieved by an NCLT order can file an appeal before the NCLAT within 45 days."
+    },
+    {
+      "section_number": "422",
+      "title": "Expeditious disposal by Tribunal and Appellate Tribunal",
+      "example": "Tribunal and NCLAT must endeavor to dispose of applications and appeals expeditiously within prescribed timeframes."
+    },
+    {
+      "section_number": "423",
+      "title": "Appeal to Supreme Court",
+      "example": "Appeals against NCLAT orders on questions of law lie to the Supreme Court within 60 days."
+    },
+    {
+      "section_number": "424",
+      "title": "Procedure before Tribunal and Appellate Tribunal",
+      "example": "Tribunals are not bound by the Civil Procedure Code but are guided by principles of natural justice with civil court powers."
+    },
+    {
+      "section_number": "425",
+      "title": "Power to punish for contempt",
+      "example": "Tribunal and NCLAT have powers to punish for contempt of their orders same as High Courts."
+    },
+    {
+      "section_number": "426",
+      "title": "Delegation of powers",
+      "example": "Tribunal may delegate administrative powers to officers or members."
+    },
+    {
+      "section_number": "427",
+      "title": "President, Members, officers, etc., to be public servants",
+      "example": "President, members, and officers of Tribunals are deemed public servants within the meaning of the IPC."
+    },
+    {
+      "section_number": "428",
+      "title": "Protection of action taken in good faith",
+      "example": "No suit or legal proceeding lies against Tribunal members for actions taken in good faith."
+    },
+    {
+      "section_number": "429",
+      "title": "Power to seek assistance of Chief Metropolitan Magistrate, etc.",
+      "example": "Tribunal may seek police assistance from Chief Metropolitan Magistrates to take custody of company properties."
+    },
+    {
+      "section_number": "430",
+      "title": "Civil court not to have jurisdiction",
+      "example": "Civil courts have no jurisdiction to entertain suits or proceedings in respect of matters which NCLT or NCLAT is empowered to determine."
+    },
+    {
+      "section_number": "431",
+      "title": "Vacancy in Tribunal or Appellate Tribunal not to invalidate acts or proceedings",
+      "example": "Proceedings of Tribunals are not invalid merely due to vacancies or constitution defects."
+    },
+    {
+      "section_number": "432",
+      "title": "Right to legal representation",
+      "example": "Parties appearing before Tribunals may appear in person or authorize chartered accountants, company secretaries, cost accountants, or advocates."
+    },
+    {
+      "section_number": "433",
+      "title": "Limitation",
+      "example": "Provisions of the Limitation Act, 1963 apply to proceedings or appeals before NCLT and NCLAT."
+    },
+    {
+      "section_number": "434",
+      "title": "Transfer of certain pending proceedings",
+      "example": "Pending proceedings before Company Law Board or High Courts are transferred to NCLT upon commencement."
+    },
+    {
+      "section_number": "435",
+      "title": "Establishment of Special Courts",
+      "example": "Central Government establishes Special Courts for speedy trial of offenses under the Act."
+    },
+    {
+      "section_number": "436",
+      "title": "Offences triable by Special Courts",
+      "example": "Offenses under the Act are triable only by Special Courts established for the area."
+    },
+    {
+      "section_number": "437",
+      "title": "Appeal and revision",
+      "example": "High Courts have powers of appeal and revision over orders of Special Courts."
+    },
+    {
+      "section_number": "438",
+      "title": "Application of Code to proceedings before Special Court",
+      "example": "Provisions of the Code of Criminal Procedure apply to proceedings before Special Courts."
+    },
+    {
+      "section_number": "439",
+      "title": "Offences to be non-cognizable",
+      "example": "All offenses under the Act are deemed non-cognizable, except those prosecuted by SFIO or specified authorities."
+    },
+    {
+      "section_number": "440",
+      "title": "Transitional provisions",
+      "example": "Magistrate courts continue trying offenses until Special Courts are designated."
+    },
+    {
+      "section_number": "441",
+      "title": "Compounding of certain offences",
+      "example": "Offenses punishable with fine only can be compounded by Regional Directors or Tribunals upon payment of compounding fees."
+    },
+    {
+      "section_number": "442",
+      "title": "Mediation and Conciliation Panel",
+      "example": "Central Government maintains a panel of experts for mediation and conciliation of corporate disputes."
+    },
+    {
+      "section_number": "443",
+      "title": "Power of Central Government to appoint company prosecutors",
+      "example": "Central Government may appoint prosecutors to conduct prosecution of offenses in Special Courts."
+    },
+    {
+      "section_number": "444",
+      "title": "Appeal against acquittal",
+      "example": "Central Government may present an appeal to High Courts against orders of acquittal passed by Special Courts."
+    },
+    {
+      "section_number": "445",
+      "title": "Compensation for accusation without reasonable cause",
+      "example": "Special Courts may award compensation to accused persons if accusations were made without reasonable cause."
+    },
+    {
+      "section_number": "446",
+      "title": "Application of fines",
+      "example": "Courts imposing fines may direct that fines be applied towards meeting prosecution costs."
+    },
+    {
+      "section_number": "446A",
+      "title": "Factors for determining level of punishment",
+      "example": "Courts consider company size, nature of business, injury to public interest, and repetition of default when determining punishment."
+    },
+    {
+      "section_number": "446B",
+      "title": "Lesser penalties for certain companies",
+      "example": "One Person Companies, small companies, and startup companies are liable to lesser penalties (half of normal fines)."
+    },
+    {
+      "section_number": "447",
+      "title": "Punishment for fraud",
+      "example": "Any person found guilty of fraud involving Rs. 10 lakh or more is punishable with imprisonment up to 10 years and heavy fines."
+    },
+    {
+      "section_number": "448",
+      "title": "Punishment for false statement",
+      "example": "Making false statements in returns, reports, or financial statements is punishable with imprisonment and fines."
+    },
+    {
+      "section_number": "449",
+      "title": "Punishment for false evidence",
+      "example": "Giving intentional false evidence before Tribunals or inspectors is punishable with imprisonment."
+    },
+    {
+      "section_number": "450",
+      "title": "Punishment where no specific penalty or punishment is provided",
+      "example": "General penalty clause where company and officers in default are fined for contraventions lacking specific penalties."
+    },
+    {
+      "section_number": "451",
+      "title": "Punishment in case of repeated default",
+      "example": "If a company or officer commits an offense within 3 years of a previous similar offense, they face doubled penalties."
+    },
+    {
+      "section_number": "452",
+      "title": "Punishment for wrongful withholding of property",
+      "example": "Officers or employees wrongfully withholding company property or cash are punishable with fines and order to restore property."
+    },
+    {
+      "section_number": "453",
+      "title": "Punishment for improper use of \"Limited\" or \"Private Limited\"",
+      "example": "Unincorporated bodies using 'Limited' or 'Private Limited' in their names are punishable with fines."
+    },
+    {
+      "section_number": "454",
+      "title": "Adjudication of penalties",
+      "example": "Central Government appoints adjudicating officers to adjudge penalties for defaults under the Act."
+    },
+    {
+      "section_number": "454A",
+      "title": "Penalty for repeated default",
+      "example": "Additional fines apply for repeated defaults within specified timeframes."
+    },
+    {
+      "section_number": "455",
+      "title": "Dormant company",
+      "example": "A company formed for future projects or holding assets without significant accounting transactions can apply for dormant status."
+    },
+    {
+      "section_number": "456",
+      "title": "Protection of action taken in good faith",
+      "example": "Saves Central Government officers from suits for actions taken in good faith under the Act."
+    },
+    {
+      "section_number": "457",
+      "title": "Non-disclosure of information in certain cases",
+      "example": "Central Government is not compelled to disclose information if public interest is compromised."
+    },
+    {
+      "section_number": "458",
+      "title": "Delegation by Central Government of its powers and functions",
+      "example": "Central Government may delegate its powers to Regional Directors, Registrars, or other authorities."
+    },
+    {
+      "section_number": "459",
+      "title": "Powers of Central Government of Tribunal to accord approval, etc., subject to conditions and to prescribe fees on applications",
+      "example": "Central Government may grant approvals, sanctions, or licenses subject to prescribed conditions and fees."
+    },
+    {
+      "section_number": "460",
+      "title": "Condonation of delay in certain cases",
+      "example": "Central Government may condone delays in filing documents or applications upon payment of prescribed fees."
+    },
+    {
+      "section_number": "461",
+      "title": "Annual report by Central Government",
+      "example": "Central Government prepares and lays an annual report on the working and administration of the Act before Parliament."
+    },
+    {
+      "section_number": "462",
+      "title": "Power to exempt class or classes of companies from provisions of this Act",
+      "example": "Central Government may exempt classes of companies from applying specific provisions of the Act by notification."
+    },
+    {
+      "section_number": "463",
+      "title": "Power of court to grant relief in certain cases",
+      "example": "Courts may relieve directors or officers from liability if they acted honestly and reasonably in default proceedings."
+    },
+    {
+      "section_number": "464",
+      "title": "Prohibition of association or partnership of persons exceeding certain number",
+      "example": "No association or partnership consisting of more than 50 persons can be formed for business gain unless registered as a company."
+    },
+    {
+      "section_number": "465",
+      "title": "Repeal of certain enactments and savings",
+      "example": "Repeals the previous Companies Act, 1956, while saving prior actions, appointments, and registrations."
+    },
+    {
+      "section_number": "466",
+      "title": "Dissolution of Company Law Board and consequential provisions",
+      "example": "Company Law Board is dissolved upon constitution of NCLT, transferring pending cases."
+    },
+    {
+      "section_number": "467",
+      "title": "Power of Central Government to amend Schedules",
+      "example": "Central Government may amend any of the Schedules to the Act by notification published in the Official Gazette."
+    },
+    {
+      "section_number": "468",
+      "title": "Power of Central Government to make rules relating to winding up",
+      "example": "Central Government may make rules providing for winding up procedures and liquidator actions."
+    },
+    {
+      "section_number": "469",
+      "title": "Power of Central Government to make rules",
+      "example": "Central Government may make general rules for carrying out provisions of the Companies Act."
+    },
+    {
+      "section_number": "470",
+      "title": "Power to remove difficulties",
+      "example": "Central Government may issue removal-of-difficulty orders by notification to resolve transitional implementation issues within 5 years."
+    }
+  ]
+}   
+            
+    
+  };
+
+  // Authentication logic mirroring original implementation style
+  function handleLogin() {
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
+    
+    if (user === "admin" && pass === "semiconductor999") {
+      document.getElementById("loginPage").classList.add("hidden");
+      document.getElementById("searchPage").classList.remove("hidden");
+    } else {
+      document.getElementById("loginError").innerText = "Invalid Registry Credentials. Try admin / semiconductor999";
+    }
+  }
+
+  function goToLogin() {
+    document.getElementById("searchPage").classList.add("hidden");
+    document.getElementById("loginPage").classList.remove("hidden");
+    document.getElementById("loginError").innerText = "";
+  }
+
+  function resetSearch() {
+    document.getElementById("sectionInput").value = "";
+    document.getElementById("keywordInput").value = "";
+    document.getElementById("searchResultBox").innerHTML = 
+      `<span style="color: #64748b;">Form cleared. Enter a targeted section or key phrase above to generate translations.</span>`;
+  }
+
+  // Execution engine processing explicit sections or searching terms
+  function showSearchResult() {
+    const sectionNum = document.getElementById("sectionInput").value.trim();
+    const keyword = document.getElementById("keywordInput").value.trim().toLowerCase();
+    const resultBox = document.getElementById("searchResultBox");
+    
+    // Exact Section query match
+    if (sectionNum !== "") {
+      if (layoutDesignActData.hasOwnProperty(sectionNum)) {
+        const item = layoutDesignActData[sectionNum];
+        resultBox.innerHTML = renderSectionHTML(sectionNum, item);
+      } else {
+        resultBox.innerHTML = `<span style="color: #ef4444; font-weight:600;">Statutory Section ${sectionNum} not found in Act No. 37 of 2000 database. Range is 1-96.</span>`;
+      }
+      return;
+    }
+
+    // Keyword contextual scan match
+    if (keyword !== "") {
+      let htmlMatches = "";
+      for (const [sec, data] of Object.entries(layoutDesignActData)) {
+        if (data.title.toLowerCase().includes(keyword) || 
+            data.text.toLowerCase().includes(keyword) || 
+            data.chapter.toLowerCase().includes(keyword)) {
+          htmlMatches += renderSectionHTML(sec, data);
+        }
+      }
+      
+      if (htmlMatches !== "") {
+        resultBox.innerHTML = htmlMatches;
+      } else {
+        resultBox.innerHTML = `<span style="color: #ef4444; font-weight:600;">No statutory sections match the concept phrase "${keyword}". Try 'infringement', 'royalty', or 'penalty'.</span>`;
+      }
+      return;
+    }
+
+    resultBox.innerHTML = `<span style="color: #ef4444; font-weight:600;">Empty parameters. Please supply an explicit section number or target design concept.</span>`;
+  }
+
+  // Helper parsing component injecting clean template views
+  function renderSectionHTML(secNum, itemData) {
+    return `
+      <div class="legal-item">
+        <div class="badge">${itemData.chapter}</div>
+        <div class="section-title">Section ${secNum}: ${itemData.title}</div>
+        <div class="section-text">${itemData.text}</div>
+        <div class="example-box">
+          <div class="example-title">Real-world Silicon / Corporate Example:</div>
+          <div>${itemData.example}</div>
+        </div>
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>
