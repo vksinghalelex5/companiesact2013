@@ -182,8 +182,6 @@
 <div class="container">
 
   <!-- LOGIN VIEW -->
-  <!--
-  
   <div id="loginPage" class="card">
     <div class="title">Corporate Statutory Portal</div>
     <div class="subtitle">The Companies Act, 2013 (Act No. 18 of 2013)</div>
@@ -203,11 +201,10 @@
     <div id="loginError"></div>
   </div> 
   
-   -->
   <!-- MAIN DATABASE SEARCH VIEW -->
   <div id="searchPage" class="card hidden">
     <div class="title">Companies Act Statutory Registry</div>
-    <div class="subtitle">Search all 470 Sections under Act No. 18 of 2013 with Real-world Examples</div>
+    <div class="subtitle">Search all Sections under Act No. 18 of 2013 with Real-world Examples</div>
 
     <div class="form-group">
       <label for="sectionInput">Search by Section Number</label>
@@ -235,8 +232,7 @@
 </div>
 
 <script>
-  // Companies Act, 2013 — section data (array, since section numbers include
-  // sub-clauses like 2(34) and lettered inserts like 378A, 446A, etc.)
+  // Companies Act, 2013 — complete dataset instance for application execution
   const actData = {
     "act_title": "The Companies Act, 2013",
     "total_sections": 470,
@@ -2988,91 +2984,103 @@
 
   */
 
-  function resetSearch() {
-   // document.getElementById("sectionInput").value = "";
-    //document.getElementById("keywordInput").value = "";
-    document.getElementById("searchResultBox").innerHTML =
-      `<span style="color: #64748b;">Form cleared. Enter a section number or key phrase above.</span>`;
+        // UI Navigation Logic
+  function handleLogin() {
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
+    const errorBox = document.getElementById("loginError");
+
+    // Simple authentication check placeholder
+    if (user !== "" && pass !== "") {
+      errorBox.textContent = "";
+      document.getElementById("loginPage").classList.add("hidden");
+      document.getElementById("searchPage").classList.remove("hidden");
+    } else {
+      errorBox.textContent = "Please enter valid credentials to unlock the registry database.";
+    }
   }
 
+  function goToLogin() {
+    document.getElementById("searchPage").classList.add("hidden");
+    document.getElementById("loginPage").classList.remove("hidden");
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("loginError").value = "";
+  }
+
+  function resetSearch() {
+    document.getElementById("sectionInput").value = "";
+    document.getElementById("keywordInput").value = "";
+    document.getElementById("searchResultBox").innerHTML = '<span style="color: #64748b;">Awaiting query. Enter a specific section number or legal concept above to execute.</span>';
+  }
+
+  // Search & Query Execution Logic
   function showSearchResult() {
-    const sectionNum = document.getElementById("sectionInput").value.trim();
-    const keyword = document.getElementById("keywordInput").value.trim().toLowerCase();
+    const secQuery = document.getElementById("sectionInput").value.trim().toLowerCase();
+    const kwQuery = document.getElementById("keywordInput").value.trim().toLowerCase();
     const resultBox = document.getElementById("searchResultBox");
 
-    if (sectionNum !== "") {
-      const match = actData.sections.find(
-        s => s.section_number.toLowerCase() === sectionNum.toLowerCase()
-      );
-      if (match) {
-        resultBox.innerHTML = renderSectionHTML(match);
-      } else {
-        resultBox.innerHTML = `<span style="color: #ef4444; font-weight:600;">Section ${escapeHtml(sectionNum)} not found. Valid range is 1-470 (including lettered inserts like 378A).</span>`;
-      }
+    if (!secQuery && !kwQuery) {
+      resultBox.innerHTML = '<span style="color: #ef4444;">Please enter either a section number or a keyword to execute a statutory query.</span>';
       return;
     }
 
-    if (keyword !== "") {
-      const matches = actData.sections.filter(s => sectionMatchesKeyword(s, keyword));
+    let matches = [];
 
-      if (matches.length > 0) {
-        resultBox.innerHTML =
-          `<div id="resultCount">${matches.length} section(s) matched "${escapeHtml(keyword)}"</div>` +
-          matches.map(renderSectionHTML).join("");
-      } else {
-        resultBox.innerHTML = `<span style="color: #ef4444; font-weight:600;">No sections match "${escapeHtml(keyword)}". Try 'director', 'dividend', or 'winding up'.</span>`;
-      }
+    if (secQuery) {
+      matches = actData.sections.filter(sec => sec.section_number.toLowerCase() === secQuery);
+    } else if (kwQuery) {
+      matches = actData.sections.filter(sec => {
+        let titleMatch = sec.title.toLowerCase().includes(kwQuery);
+        let exMatch = sec.example && sec.example.toLowerCase().includes(kwQuery);
+        let subMatch = sec.sub_sections && sec.sub_sections.some(sub => 
+          sub.title.toLowerCase().includes(kwQuery) || sub.example.toLowerCase().includes(kwQuery) || sub.sub_section.toLowerCase().includes(kwQuery)
+        );
+        return titleMatch || exMatch || subMatch;
+      });
+    }
+
+    if (matches.length === 0) {
+      resultBox.innerHTML = '<span style="color: #ef4444;">No statutory sections found matching your query criteria. Please verify section numbering or keywords.</span>';
       return;
     }
 
-    resultBox.innerHTML = `<span style="color: #ef4444; font-weight:600;">Empty parameters. Please supply a section number or a search term.</span>`;
-  }
+    let htmlOutput = `<div id="resultCount">Found ${matches.length} matching statutory record(s)</div>`;
 
-  function sectionMatchesKeyword(section, keyword) {
-    if (section.title.toLowerCase().includes(keyword)) return true;
-    if (section.example && section.example.toLowerCase().includes(keyword)) return true;
-    if (section.sub_sections) {
-      return section.sub_sections.some(sub =>
-        sub.title.toLowerCase().includes(keyword) ||
-        (sub.example && sub.example.toLowerCase().includes(keyword))
-      );
-    }
-    return false;
-  }
+    matches.forEach(sec => {
+      htmlOutput += `
+        <div class="legal-item">
+          <div class="section-title">Section ${sec.section_number}: ${sec.title}</div>
+      `;
 
-  function renderSectionHTML(item) {
-    let subHtml = "";
-    if (item.sub_sections && item.sub_sections.length > 0) {
-      subHtml = item.sub_sections.map(sub => `
-        <div class="sub-title">${escapeHtml(sub.sub_section)} — ${escapeHtml(sub.title)}</div>
-        <div class="example-box">
-          <div class="example-title">Example:</div>
-          <div>${escapeHtml(sub.example)}</div>
-        </div>
-      `).join("");
-    }
+      if (sec.example) {
+        htmlOutput += `
+          <div class="example-box">
+            <div class="example-title">Statutory Application & Real-World Example</div>
+            <div>${sec.example}</div>
+          </div>
+        `;
+      }
 
-    const mainExample = item.example ? `
-        <div class="example-box">
-          <div class="example-title">Real-world Corporate Example:</div>
-          <div>${escapeHtml(item.example)}</div>
-        </div>` : "";
+      if (sec.sub_sections && sec.sub_sections.length > 0) {
+        sec.sub_sections.forEach(sub => {
+          htmlOutput += `
+            <div class="sub-title">${sub.sub_section} — ${sub.title}</div>
+            <div class="example-box">
+              <div class="example-title">Application</div>
+              <div>${sub.example}</div>
+            </div>
+          `;
+        });
+      }
 
-    return `
-      <div class="legal-item">
-        <div class="section-title">Section ${escapeHtml(item.section_number)}: ${escapeHtml(item.title)}</div>
-        ${mainExample}
-        ${subHtml}
-      </div>
-    `;
-  }
+      htmlOutput += `</div>`;
+    });
 
-  function escapeHtml(str) {
-    const div = document.createElement("div");
-    div.textContent = str == null ? "" : String(str);
-    return div.innerHTML;
+    resultBox.innerHTML = htmlOutput;
   }
 </script>
 
 </body>
 </html>
+  
