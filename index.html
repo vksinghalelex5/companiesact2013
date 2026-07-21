@@ -1,241 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Companies Act, 2013 — Statutory Registry</title>
-  <style>
-    :root {
-      --primary-color: #0f172a;
-      --secondary-color: #0284c7;
-      --accent-color: #0ea5e9;
-      --bg-color: #f8fafc;
-      --card-bg: #ffffff;
-      --text-color: #334155;
-      --heading-color: #0f172a;
-      --border-color: #e2e8f0;
-    }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Companies Act, 2013 — Statutory Registry</title>
+  <style>
+    :root {
+      --primary-color: #0f172a;
+      --secondary-color: #0284c7;
+      --accent-color: #0ea5e9;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #334155;
+      --heading-color: #0f172a;
+      --border-color: #e2e8f0;
+    } 
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .hidden { display: none !important; }
-    .container {
-      width: 100%;
-      max-width: 1000px;
-      padding: 24px;
-      box-sizing: border-box;
-    }
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -4px rgba(0,0,0,0.05);
-      padding: 40px;
-      margin-top: 20px;
-      box-sizing: border-box;
-    }
-    .title {
-      font-size: 26px;
-      font-weight: 800;
-      color: var(--primary-color);
-      text-align: center;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .subtitle {
-      font-size: 15px;
-      color: #64748b;
-      text-align: center;
-      margin-top: 0;
-      margin-bottom: 35px;
-    }
-    .form-group { margin-bottom: 24px; }
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 8px;
-      font-size: 14px;
-      color: var(--heading-color);
-    }
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 14px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      font-size: 16px;
-      transition: all 0.2s ease-in-out;
-      box-sizing: border-box;
-      background-color: #f8fafc;
-    }
-    input[type="text"]:focus, input[type="password"]:focus {
-      outline: none;
-      border-color: var(--secondary-color);
-      box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
-      background-color: #ffffff;
-    }
-    .btn-group {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin-top: 30px;
-      flex-wrap: wrap;
-    }
-    button {
-      padding: 14px 28px;
-      font-size: 15px;
-      font-weight: 600;
-      background-color: var(--secondary-color);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    button:hover { background-color: #0369a1; transform: translateY(-1px); }
-    button.secondary { background-color: #64748b; }
-    button.secondary:hover { background-color: #475569; }
-    .or-divider {
-      text-align: center;
-      font-weight: bold;
-      margin: 30px 0;
-      color: #94a3b8;
-      position: relative;
-    }
-    .or-divider::before, .or-divider::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 42%;
-      height: 1px;
-      background: var(--border-color);
-    }
-    .or-divider::before { left: 0; }
-    .or-divider::after { right: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .hidden { display: none !important; }
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -4px rgba(0,0,0,0.05);
+      padding: 40px;
+      margin-top: 20px;
+      box-sizing: border-box;
+    }
+    .title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #64748b;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 35px;
+    }
+    .form-group { margin-bottom: 24px; }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--heading-color);
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-size: 16px;
+      transition: all 0.2s ease-in-out;
+      box-sizing: border-box;
+      background-color: #f8fafc;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
+      background-color: #ffffff;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    button:hover { background-color: #0369a1; transform: translateY(-1px); }
+    button.secondary { background-color: #64748b; }
+    button.secondary:hover { background-color: #475569; }
+    .or-divider {
+      text-align: center;
+      font-weight: bold;
+      margin: 30px 0;
+      color: #94a3b8;
+      position: relative;
+    }
+    .or-divider::before, .or-divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 42%;
+      height: 1px;
+      background: var(--border-color);
+    }
+    .or-divider::before { left: 0; }
+    .or-divider::after { right: 0; } 
 
-    .result-box {
-      margin-top: 30px;
-      background: #fafafa;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 24px;
-      max-height: 600px;
-      overflow-y: auto;
-    }
-    .legal-item {
-      margin-bottom: 25px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border-color);
-    }
-    .legal-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .section-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--secondary-color);
-      margin-top: 0;
-      margin-bottom: 6px;
-    }
-    .sub-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--primary-color);
-      margin: 14px 0 4px;
-    }
-    .example-box {
-      background-color: #f0f9ff;
-      border-left: 4px solid var(--accent-color);
-      padding: 12px 16px;
-      margin-top: 8px;
-      border-radius: 0 8px 8px 0;
-      font-size: 14.5px;
-    }
-    .example-title {
-      font-weight: bold;
-      color: #0369a1;
-      margin-bottom: 4px;
-    }
-    #loginError {
-      color: #ef4444;
-      font-size: 14px;
-      text-align: center;
-      margin-top: 15px;
-      font-weight: 600;
-    }
-    #resultCount {
-      font-size: 12px;
-      color: #94a3b8;
-      margin-bottom: 10px;
-    }
-  </style>
+    .result-box {
+      margin-top: 30px;
+      background: #fafafa;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+    .legal-item {
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .legal-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--secondary-color);
+      margin-top: 0;
+      margin-bottom: 6px;
+    }
+    .sub-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin: 14px 0 4px;
+    }
+    .example-box {
+      background-color: #f0f9ff;
+      border-left: 4px solid var(--accent-color);
+      padding: 12px 16px;
+      margin-top: 8px;
+      border-radius: 0 8px 8px 0;
+      font-size: 14.5px;
+    }
+    .example-title {
+      font-weight: bold;
+      color: #0369a1;
+      margin-bottom: 4px;
+    }
+    #resultCount {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
-<body>
+<body> 
 
-<div class="container">
+<div class="container"> 
 
-  <!-- LOGIN VIEW -->
-  <div id="loginPage" class="card">
-    <div class="title">Corporate Statutory Portal</div>
-    <div class="subtitle">The Companies Act, 2013 (Act No. 18 of 2013)</div>
+  <!-- MAIN DATABASE SEARCH VIEW (Directly visible) -->
+  <div id="searchPage" class="card">
+    <div class="title">Companies Act Statutory Registry</div>
+    <div class="subtitle">Search all 470 Sections under Act No. 18 of 2013 with Real-world Examples</div> 
 
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" id="username" placeholder="Enter portal ID">
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter secure gateway key">
-    </div>
+    <div class="form-group">
+      <label for="sectionInput">Search by Section Number</label>
+      <input type="text" id="sectionInput" placeholder="Enter a section number (e.g., 2, 68, 149, 378A)">
+    </div> 
 
-    <div style="text-align: center;">
-      <button onclick="handleLogin()">Unlock Registry Database</button>
-    </div>
-    <div id="loginError"></div>
-  </div> 
-  
-  <!-- MAIN DATABASE SEARCH VIEW -->
-  <div id="searchPage" class="card hidden">
-    <div class="title">Companies Act Statutory Registry</div>
-    <div class="subtitle">Search all Sections under Act No. 18 of 2013 with Real-world Examples</div>
+    <div class="or-divider">OR</div> 
 
-    <div class="form-group">
-      <label for="sectionInput">Search by Section Number</label>
-      <input type="text" id="sectionInput" placeholder="Enter a section number (e.g., 2, 68, 149, 378A)">
-    </div>
+    <div class="form-group">
+      <label for="keywordInput">Search by Legal Concept</label>
+      <input type="text" id="keywordInput" placeholder="Enter keyword (e.g., director, dividend, winding up, fraud)">
+    </div> 
 
-    <div class="or-divider">OR</div>
+    <div class="btn-group">
+      <button onclick="showSearchResult()">Execute Statutory Query</button>
+      <button class="secondary" onclick="resetSearch()">Clear Inputs</button>
+    </div> 
 
-    <div class="form-group">
-      <label for="keywordInput">Search by Legal Concept</label>
-      <input type="text" id="keywordInput" placeholder="Enter keyword (e.g., director, dividend, winding up, fraud)">
-    </div>
+    <div id="searchResultBox" class="result-box">
+      <span style="color: #64748b;">Awaiting query. Enter a specific section number or legal concept above to execute.</span>
+    </div>
+  </div> 
 
-    <div class="btn-group">
-      <button class="secondary" onclick="goToLogin()">Lock Database</button>
-      <button onclick="showSearchResult()">Execute Statutory Query</button>
-      <button class="secondary" onclick="resetSearch()">Clear Inputs</button>
-    </div>
-
-    <div id="searchResultBox" class="result-box">
-      <span style="color: #64748b;">Awaiting query. Enter a specific section number or legal concept above to execute.</span>
-    </div>
-  </div>
-
-</div>
+</div> 
 
 <script>
-  // Companies Act, 2013 — complete dataset instance for application execution
-  const actData = {
-    "act_title": "The Companies Act, 2013",
-    "total_sections": 470,
+  // Companies Act, 2013 — section data
+  const actData = {
+    "act_title": "The Companies Act, 2013",
+    "total_sections": 470,
     
   "sections": [
     {
@@ -2985,102 +2957,91 @@
   */
 
         // UI Navigation Logic
-  function handleLogin() {
-    const user = document.getElementById("username").value.trim();
-    const pass = document.getElementById("password").value.trim();
-    const errorBox = document.getElementById("loginError");
+   function resetSearch() {
+    document.getElementById("sectionInput").value = "";
+    document.getElementById("keywordInput").value = "";
+    document.getElementById("searchResultBox").innerHTML =
+      `<span style="color: #64748b;">Form cleared. Enter a section number or key phrase above.</span>`;
+  } 
 
-    // Simple authentication check placeholder
-    if (user !== "" && pass !== "") {
-      errorBox.textContent = "";
-      document.getElementById("loginPage").classList.add("hidden");
-      document.getElementById("searchPage").classList.remove("hidden");
-    } else {
-      errorBox.textContent = "Please enter valid credentials to unlock the registry database.";
-    }
-  }
+  function showSearchResult() {
+    const sectionNum = document.getElementById("sectionInput").value.trim();
+    const keyword = document.getElementById("keywordInput").value.trim().toLowerCase();
+    const resultBox = document.getElementById("searchResultBox"); 
 
-  function goToLogin() {
-    document.getElementById("searchPage").classList.add("hidden");
-    document.getElementById("loginPage").classList.remove("hidden");
-    document.getElementById("username").value = "";
-    document.getElementById("password").value = "";
-    document.getElementById("loginError").value = "";
-  }
+    if (sectionNum !== "") {
+      const match = actData.sections.find(
+        s => s.section_number.toLowerCase() === sectionNum.toLowerCase()
+      );
+      if (match) {
+        resultBox.innerHTML = renderSectionHTML(match);
+      } else {
+        resultBox.innerHTML = `<span style="color: #ef4444; font-weight:600;">Section ${escapeHtml(sectionNum)} not found. Valid range is 1-470 (including lettered inserts like 378A).</span>`;
+      }
+      return;
+    } 
 
-  function resetSearch() {
-    document.getElementById("sectionInput").value = "";
-    document.getElementById("keywordInput").value = "";
-    document.getElementById("searchResultBox").innerHTML = '<span style="color: #64748b;">Awaiting query. Enter a specific section number or legal concept above to execute.</span>';
-  }
+    if (keyword !== "") {
+      const matches = actData.sections.filter(s => sectionMatchesKeyword(s, keyword)); 
 
-  // Search & Query Execution Logic
-  function showSearchResult() {
-    const secQuery = document.getElementById("sectionInput").value.trim().toLowerCase();
-    const kwQuery = document.getElementById("keywordInput").value.trim().toLowerCase();
-    const resultBox = document.getElementById("searchResultBox");
+      if (matches.length > 0) {
+        resultBox.innerHTML =
+          `<div id="resultCount">${matches.length} section(s) matched "${escapeHtml(keyword)}"</div>` +
+          matches.map(renderSectionHTML).join("");
+      } else {
+        resultBox.innerHTML = `<span style="color: #ef4444; font-weight:600;">No sections match "${escapeHtml(keyword)}". Try 'director', 'dividend', or 'winding up'.</span>`;
+      }
+      return;
+    } 
 
-    if (!secQuery && !kwQuery) {
-      resultBox.innerHTML = '<span style="color: #ef4444;">Please enter either a section number or a keyword to execute a statutory query.</span>';
-      return;
-    }
+    resultBox.innerHTML = `<span style="color: #ef4444; font-weight:600;">Empty parameters. Please supply a section number or a search term.</span>`;
+  } 
 
-    let matches = [];
+  function sectionMatchesKeyword(section, keyword) {
+    if (section.title.toLowerCase().includes(keyword)) return true;
+    if (section.example && section.example.toLowerCase().includes(keyword)) return true;
+    if (section.sub_sections) {
+      return section.sub_sections.some(sub =>
+        sub.title.toLowerCase().includes(keyword) ||
+        (sub.example && sub.example.toLowerCase().includes(keyword))
+      );
+    }
+    return false;
+  } 
 
-    if (secQuery) {
-      matches = actData.sections.filter(sec => sec.section_number.toLowerCase() === secQuery);
-    } else if (kwQuery) {
-      matches = actData.sections.filter(sec => {
-        let titleMatch = sec.title.toLowerCase().includes(kwQuery);
-        let exMatch = sec.example && sec.example.toLowerCase().includes(kwQuery);
-        let subMatch = sec.sub_sections && sec.sub_sections.some(sub => 
-          sub.title.toLowerCase().includes(kwQuery) || sub.example.toLowerCase().includes(kwQuery) || sub.sub_section.toLowerCase().includes(kwQuery)
-        );
-        return titleMatch || exMatch || subMatch;
-      });
-    }
+  function renderSectionHTML(item) {
+    let subHtml = "";
+    if (item.sub_sections && item.sub_sections.length > 0) {
+      subHtml = item.sub_sections.map(sub => `
+        <div class="sub-title">${escapeHtml(sub.sub_section)} — ${escapeHtml(sub.title)}</div>
+        <div class="example-box">
+          <div class="example-title">Example:</div>
+          <div>${escapeHtml(sub.example)}</div>
+        </div>
+      `).join("");
+    } 
 
-    if (matches.length === 0) {
-      resultBox.innerHTML = '<span style="color: #ef4444;">No statutory sections found matching your query criteria. Please verify section numbering or keywords.</span>';
-      return;
-    }
+    const mainExample = item.example ? `
+        <div class="example-box">
+          <div class="example-title">Real-world Corporate Example:</div>
+          <div>${escapeHtml(item.example)}</div>
+        </div>` : ""; 
 
-    let htmlOutput = `<div id="resultCount">Found ${matches.length} matching statutory record(s)</div>`;
+    return `
+      <div class="legal-item">
+        <div class="section-title">Section ${escapeHtml(item.section_number)}: ${escapeHtml(item.title)}</div>
+        ${mainExample}
+        ${subHtml}
+      </div>
+    `;
+  } 
 
-    matches.forEach(sec => {
-      htmlOutput += `
-        <div class="legal-item">
-          <div class="section-title">Section ${sec.section_number}: ${sec.title}</div>
-      `;
-
-      if (sec.example) {
-        htmlOutput += `
-          <div class="example-box">
-            <div class="example-title">Statutory Application & Real-World Example</div>
-            <div>${sec.example}</div>
-          </div>
-        `;
-      }
-
-      if (sec.sub_sections && sec.sub_sections.length > 0) {
-        sec.sub_sections.forEach(sub => {
-          htmlOutput += `
-            <div class="sub-title">${sub.sub_section} — ${sub.title}</div>
-            <div class="example-box">
-              <div class="example-title">Application</div>
-              <div>${sub.example}</div>
-            </div>
-          `;
-        });
-      }
-
-      htmlOutput += `</div>`;
-    });
-
-    resultBox.innerHTML = htmlOutput;
-  }
-</script>
+  function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str == null ? "" : String(str);
+    return div.innerHTML;
+  }
+</script> 
 
 </body>
 </html>
-  
